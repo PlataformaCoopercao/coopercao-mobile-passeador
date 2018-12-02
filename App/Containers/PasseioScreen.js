@@ -152,10 +152,11 @@ class PasseioScreen extends Component {
       //   </KeyboardAvoidingView>
       // </ScrollView>
           <Root>
-          <Container style={{backgroundColor:'black'}}>
+          <Container style={{backgroundColor:'red'}}>
           <Header style={{backgroundColor:'red', marginTop: 22}}>
               <Left><Icon name='arrow-back' /></Left>
-              <Body><Title dark>{strings('General.walk')}</Title></Body>
+              <Body><Title style={{color: Colors.snow}}>{strings('General.walk')}</Title></Body>
+              <Right/>
             </Header>
             <Content padder style={{backgroundColor: 'white'}}>
             <ScrollView>
@@ -199,7 +200,7 @@ class PasseioScreen extends Component {
             <Footer style={{backgroundColor:'red'}}>
                 <FooterTab style={{backgroundColor:'red'}}>
                   <Button>
-                    <Icon name='person' style={{color:'white'}}/>
+                    <Icon name='md-person' type='Ionicons' style={{color:'white'}}/>
                     <Text style={{color:'white'}}>{strings('Footer.profile_button')}</Text>
                   </Button>
                   <Button onPress={() => navigate('HistoricoPasseadorScreen')}>
@@ -208,7 +209,7 @@ class PasseioScreen extends Component {
                   </Button>
                   <Button badge vertical onPress={() => navigate('PasseadorPasseiosScreen')}>
                     <Badge style={{backgroundColor:'black'}}><Text style={{color:'white'}}>2</Text></Badge>
-                    <Icon name='list-box' style={{color:'white'}}/>
+                    <Icon name='md-list-box' type='Ionicons' style={{color:'white'}}/>
                     <Text style={{color:'white'}}>{strings('Footer.assign_button')}</Text>
                   </Button>
                   <Button badge vertical onPress={() => navigate('PasseiosLivresScreen')}>

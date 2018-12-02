@@ -10,6 +10,7 @@ import {
 } from 'native-base'
 import FeedbackNota from '../Components/FeedbackNota';
 import { Font, AppLoading, Expo } from "expo"
+import { Colors } from '../Themes/'
 import { StackNavigator } from "react-navigation"
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
@@ -67,10 +68,11 @@ class FeedbackScreen extends Component {
     } else {
       return (
         <Root>
-          <Container style={{backgroundColor:'black'}}>
+          <Container style={{backgroundColor:'red'}}>
           <Header style={{backgroundColor:'red', marginTop: 22}}>
               <Left><Icon name='arrow-back' /></Left>
-              <Body><Title dark>{strings('FeedbackScreen.rateWalk')}</Title></Body>
+              <Body><Title style={{color: Colors.snow}}>{strings('FeedbackScreen.rateWalk')}</Title></Body>
+              <Right/>
             </Header>
             <Content padder style={{backgroundColor: 'white'}}>
             <KeyboardAvoidingView behavior='position'>
@@ -121,7 +123,7 @@ class FeedbackScreen extends Component {
           <Footer style={{backgroundColor:'red'}}>
                 <FooterTab style={{backgroundColor:'red'}}>
                   <Button>
-                    <Icon name='person' style={{color:'white'}}/>
+                    <Icon name='md-person' type='Ionicons' style={{color:'white'}}/>
                     <Text style={{color:'white'}}>{strings('Footer.profile_button')}</Text>
                   </Button>
                   <Button onPress={() => navigate('HistoricoPasseadorScreen')}>
@@ -130,7 +132,7 @@ class FeedbackScreen extends Component {
                   </Button>
                   <Button badge vertical onPress={() => navigate('PasseadorPasseiosScreen')}>
                     <Badge style={{backgroundColor:'black'}}><Text style={{color:'white'}}>2</Text></Badge>
-                    <Icon name='list-box' style={{color:'white'}}/>
+                    <Icon name='md-list-box' type='Ionicons' style={{color:'white'}}/>
                     <Text style={{color:'white'}}>{strings('Footer.assign_button')}</Text>
                   </Button>
                   <Button badge vertical onPress={() => navigate('PasseiosLivresScreen')}>
