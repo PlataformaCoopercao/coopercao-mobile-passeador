@@ -1,9 +1,9 @@
 {
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "packagerPort": 19001,
+  "packagerPid": 8060,
+  "expoServerNgrokUrl": "https://6j-5xf.anonymous.coopercao-mobile-passeador.exp.direct",
+  "packagerNgrokUrl": "https://packager.6j-5xf.anonymous.coopercao-mobile-passeador.exp.direct",
+  "ngrokPid": 7480,
   "devToolsPort": 19002,
-  "expoServerPort": null
+  "expoServerPort": 19000
 }

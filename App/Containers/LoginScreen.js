@@ -85,7 +85,7 @@ class LoginScreen extends Component {
           </ListItem> 
           <ListItem>
               <InputGroup>
-                  <Input placeholder={strings('LoginScreen.password')} />
+                  <Input secureTextEntry={true} placeholder={strings('LoginScreen.password')} />
               </InputGroup>
           </ListItem>
       </List>

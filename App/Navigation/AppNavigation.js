@@ -6,6 +6,7 @@ import HistoricoPasseadorScreen from '../Containers/HistoricoPasseadorScreen.js'
 import PasseioScreen from '../Containers/PasseioScreen.js'
 import FeedbackScreen from '../Containers/FeedbackScreen.js'
 import MenuPasseadorScreen from '../Containers/MenuPasseadorScreen'
+import EditarPasseadorScreen from '../Containers/EditarPasseadorScreen'
 
 import styles from './Styles/NavigationStyles'
 
@@ -17,7 +18,8 @@ const PrimaryNav = createBottomTabNavigator({
   HistoricoPasseadorScreen: { screen: HistoricoPasseadorScreen},
   PasseioScreen: { screen: PasseioScreen},
   FeedbackScreen: { screen: FeedbackScreen},
-  MenuPasseadorScreen: { screen: MenuPasseadorScreen }
+  MenuPasseadorScreen: { screen: MenuPasseadorScreen },
+  EditarPasseadorScreen: { screen: EditarPasseadorScreen}
 }, {
   // Default config for all screens
   headerMode: 'none',
