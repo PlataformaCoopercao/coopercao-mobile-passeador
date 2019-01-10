@@ -96,7 +96,7 @@ class PasseadorPasseiosScreen extends Component {
             </Content>
             <Footer style={{backgroundColor:'red'}}>
                 <FooterTab style={{backgroundColor:'red'}}>
-                  <Button>
+                  <Button onPress={() => navigate('PerfilPasseadorScreen')}>
                     <Icon name='md-person' type='Ionicons' style={{color:'white'}}/>
                     <Text style={{color:'white'}}>{strings('Footer.profile_button')}</Text>
                   </Button>

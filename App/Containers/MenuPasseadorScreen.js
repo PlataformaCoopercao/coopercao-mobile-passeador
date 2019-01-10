@@ -43,6 +43,7 @@ class MenuPasseadorScreen extends Component {
 
   render() {
     const uri = "http://www.revistapronews.com.br/repository/news/big-153625870692-edenwololo1.jpg";
+    const {navigate} = this.props.navigation;
     if (this.state.fontLoading) {
       return (
         <Container>
@@ -60,10 +61,9 @@ class MenuPasseadorScreen extends Component {
               <Icon name='arrow-back' />
             </Left>
             <Body>
-              <Title style={{color: Colors.snow}}>{"Menu"}</Title>
+              <Title style={{color: Colors.snow}}>Menu</Title>
             </Body>
             <Right>
-
             </Right>
           </Header>
           <Content padder style={{ backgroundColor: 'white', alignContent: "stretch" }}>
@@ -73,37 +73,33 @@ class MenuPasseadorScreen extends Component {
                 <Text>Bem-Vindo Eden Wiedemann</Text>
               </ListItem>
               <ListItem style={{ alignSelf: 'center' }}>
-                <Button style={styles.botao}>
-                  <Text>{"Passeios Agendados"}</Text>
-                </Button>          </ListItem>
-              <ListItem style={{ alignSelf: 'center' }}>
-                <Button style={styles.botao}>
-                  <Text>{"Passeios Disponíveis"}</Text>
+                <Button onPress={() => navigate('PasseadorPasseiosScreen')} style={styles.botao}>
+                  <Text>Passeios Agendados</Text>
                 </Button>
               </ListItem>
               <ListItem style={{ alignSelf: 'center' }}>
-                <Button style={styles.botao}>
-                  <Text>{'Histórico de passeios'}</Text>
+                <Button onPress={() => navigate('PasseiosLivresScreen')} style={styles.botao}>
+                  <Text>Passeios Disponíveis</Text>
                 </Button>
               </ListItem>
               <ListItem style={{ alignSelf: 'center' }}>
-                <Button style={styles.botao}>
-                  <Text>{'Perfil'}</Text>
+                <Button onPress={() => navigate('HistoricoPasseadorScreen')} style={styles.botao}>
+                  <Text>Histórico de passeios</Text>
                 </Button>
               </ListItem>
               <ListItem style={{ alignSelf: 'center' }}>
-                <Button style={styles.botao}>
-                  <Text>{'Fatura'}</Text>
+                <Button onPress={() => navigate('PerfilPasseadorScreen')} style={styles.botao}>
+                  <Text>Perfil</Text>
                 </Button>
               </ListItem>
             </List>
             <Button style={styles.botao}>
-              <Text>{"Deslogar"}</Text>
+              <Text>Deslogar</Text>
             </Button>
           </Content>
           <Footer style={{backgroundColor:'red'}}>
                 <FooterTab style={{backgroundColor:'red'}}>
-                  <Button>
+                  <Button onPress={() => navigate('PerfilPasseadorScreen')}>
                     <Icon name='md-person' type='Ionicons' style={{color:'white'}}/>
                     <Text style={{color:'white'}}>{strings('Footer.profile_button')}</Text>
                   </Button>

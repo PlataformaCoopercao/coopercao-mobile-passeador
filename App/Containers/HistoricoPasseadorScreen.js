@@ -61,7 +61,7 @@ class TelaHistoricoPasseadorScreen extends Component {
         <Root>
           <Container style={{backgroundColor:'red'}}>
           <Header style={{backgroundColor:'red', marginTop: 22}}>
-              <Left><Button onPress={() => navigate('MenuPasseadorScreen')}><Icon style={{color: Colors.snow}}name='arrow-back' /></Button></Left>
+              <Left><Icon style={style.botao}name='arrow-back'/></Left>
               <Body><Title style={{color: Colors.snow}}>{strings('HistoricoPasseadorScreen.walkHistory')}</Title></Body>
               <Right/>
             </Header>
