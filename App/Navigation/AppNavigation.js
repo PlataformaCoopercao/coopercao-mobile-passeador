@@ -5,19 +5,21 @@ import PasseiosLivresScreen from '../Containers/PasseiosLivresScreen.js'
 import HistoricoPasseadorScreen from '../Containers/HistoricoPasseadorScreen.js'
 import PasseioScreen from '../Containers/PasseioScreen.js'
 import FeedbackScreen from '../Containers/FeedbackScreen.js'
-import MenuPasseadorScreen from '../Containers/MenuPasseadorScreen'
+import MenuPasseadorScreen from '../Containers/MenuPasseadorScreen.js'
+import PerfilPasseadorScreen from '../Containers/PerfilPasseadorScreen.js'
 
 import styles from './Styles/NavigationStyles'
 
 // Manifest of possible screens
-const PrimaryNav = createBottomTabNavigator({
+const PrimaryNav = createStackNavigator({
   LoginScreen: { screen: LoginScreen },
   PasseadorPasseiosScreen: { screen: PasseadorPasseiosScreen },
   PasseiosLivresScreen: { screen: PasseiosLivresScreen},
   HistoricoPasseadorScreen: { screen: HistoricoPasseadorScreen},
   PasseioScreen: { screen: PasseioScreen},
   FeedbackScreen: { screen: FeedbackScreen},
-  MenuPasseadorScreen: { screen: MenuPasseadorScreen }
+  MenuPasseadorScreen: { screen: MenuPasseadorScreen },
+  PerfilPasseadorScreen: { screen: PerfilPasseadorScreen}
 }, {
   // Default config for all screens
   headerMode: 'none',

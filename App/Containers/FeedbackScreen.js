@@ -114,7 +114,7 @@ class FeedbackScreen extends Component {
                 <Textarea style={{backgroundColor:'lightgrey', borderColor:'black'}} rowSpan={5} bordered placeholder={strings('FeedbackScreen.feedback')} />
               </Form>
               <Body>
-              <Button style={{backgroundColor: 'red',  width: 150, height: 60, marginTop: 20, borderRadius: 5, position: 'relative', justifyContent: 'center'}}>
+              <Button onPress={()=> navigate('MenuPasseadorScreen')} style={{backgroundColor: 'red',  width: 150, height: 60, marginTop: 20, borderRadius: 5, position: 'relative', justifyContent: 'center'}}>
                  <Text style={{color:'white', fontSize: 16}}>{strings('General.rate_button')}</Text>
               </Button>
               </Body>
@@ -122,7 +122,7 @@ class FeedbackScreen extends Component {
           </Content>
           <Footer style={{backgroundColor:'red'}}>
                 <FooterTab style={{backgroundColor:'red'}}>
-                  <Button>
+                  <Button onPress={() => navigate('PerfilPasseadorScreen')}>
                     <Icon name='md-person' type='Ionicons' style={{color:'white'}}/>
                     <Text style={{color:'white'}}>{strings('Footer.profile_button')}</Text>
                   </Button>

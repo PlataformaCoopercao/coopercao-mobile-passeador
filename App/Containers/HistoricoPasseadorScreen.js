@@ -61,7 +61,7 @@ class TelaHistoricoPasseadorScreen extends Component {
         <Root>
           <Container style={{backgroundColor:'red'}}>
           <Header style={{backgroundColor:'red', marginTop: 22}}>
-              <Left><Icon name='arrow-back' /></Left>
+              <Left><Button onPress={() => navigate('MenuPasseadorScreen')}><Icon style={{color: Colors.snow}}name='arrow-back' /></Button></Left>
               <Body><Title style={{color: Colors.snow}}>{strings('HistoricoPasseadorScreen.walkHistory')}</Title></Body>
               <Right/>
             </Header>
@@ -90,7 +90,7 @@ class TelaHistoricoPasseadorScreen extends Component {
             </Content>
             <Footer style={{backgroundColor:'red'}}>
                 <FooterTab style={{backgroundColor:'red'}}>
-                  <Button>
+                  <Button onPress={() => navigate('PerfilPasseadorScreen')}>
                     <Icon name='md-person' type='Ionicons' style={{color:'white'}}/>
                     <Text style={{color:'white'}}>{strings('Footer.profile_button')}</Text>
                   </Button>
