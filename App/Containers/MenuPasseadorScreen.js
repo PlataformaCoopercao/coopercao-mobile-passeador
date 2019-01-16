@@ -58,7 +58,6 @@ class MenuPasseadorScreen extends Component {
         <Container style={{ backgroundColor: 'red' }}>
           <Header style={{ backgroundColor: 'red', marginTop: 15 }}>
             <Left>
-              <Icon name='arrow-back' />
             </Left>
             <Body>
               <Title style={{color: Colors.snow}}>Menu</Title>
@@ -70,7 +69,7 @@ class MenuPasseadorScreen extends Component {
             <List>
               <ListItem style={{ alignSelf: 'center', alignContent: 'center', flexDirection: 'column' }}>
                 <Thumbnail style={{ height: 120, width: 120 }} large source={{ uri: uri }} />
-                <Text>Bem-Vindo Eden Wiedemann</Text>
+                <Text>Bem-Vindo, Eden Wiedemann</Text>
               </ListItem>
               <ListItem style={{ alignSelf: 'center' }}>
                 <Button onPress={() => navigate('PasseadorPasseiosScreen')} style={styles.botao}>

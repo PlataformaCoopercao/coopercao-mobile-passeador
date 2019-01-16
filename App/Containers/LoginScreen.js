@@ -80,23 +80,18 @@ class LoginScreen extends Component {
         <List>
           <ListItem>
               <InputGroup>
-                  <Input placeholder={strings('LoginScreen.email')} />
+                <Input placeholder={strings('LoginScreen.email')} keyboardType='email-address' autoCorrect={false} autoCapitalize='none'/>
               </InputGroup>
           </ListItem> 
           <ListItem>
               <InputGroup>
-                  <Input placeholder={strings('LoginScreen.password')} />
+                <Input placeholder={strings('LoginScreen.password')} autoCapitalize='none' autoCorrect={false} secureTextEntry={true}/>
               </InputGroup>
           </ListItem>
       </List>
       <Button style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20, backgroundColor:'red' }} onPress={() => navigate('MenuPasseadorScreen')}>
       <Text>{strings('LoginScreen.enter')}</Text>
       </Button>
-      <Left>
-      <Button style={{ marginTop: 5, marginBottom: 5, backgroundColor:'gray' }}>
-      <Text>{strings('LoginScreen.firstAccess')}</Text>
-      </Button>
-      </Left>
       <Body/>
       <Right>
       <Button style={{ marginTop: 5, marginBottom: 5, backgroundColor:'gray' }}>

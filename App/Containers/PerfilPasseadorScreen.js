@@ -43,6 +43,7 @@ class  PerfilPasseadorScreen extends Component {
 
   render() {
     const uri = "https://pbs.twimg.com/media/DahEyvzVQAAizMF.jpg";
+    const {navigate} = this.props.navigation;
     if (this.state.fontLoading) {
       return (
         <Container>
