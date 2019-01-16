@@ -7,6 +7,7 @@ import PasseioScreen from '../Containers/PasseioScreen.js'
 import FeedbackScreen from '../Containers/FeedbackScreen.js'
 import MenuPasseadorScreen from '../Containers/MenuPasseadorScreen.js'
 import PerfilPasseadorScreen from '../Containers/PerfilPasseadorScreen.js'
+import EditarPasseadorScreen from '../Containers/EditarPasseadorScreen'
 
 import styles from './Styles/NavigationStyles'
 
@@ -19,7 +20,8 @@ const PrimaryNav = createStackNavigator({
   PasseioScreen: { screen: PasseioScreen},
   FeedbackScreen: { screen: FeedbackScreen},
   MenuPasseadorScreen: { screen: MenuPasseadorScreen },
-  PerfilPasseadorScreen: { screen: PerfilPasseadorScreen}
+  PerfilPasseadorScreen: { screen: PerfilPasseadorScreen},
+  EditarPasseadorScreen: { screen: EditarPasseadorScreen}
 }, {
   // Default config for all screens
   headerMode: 'none',
