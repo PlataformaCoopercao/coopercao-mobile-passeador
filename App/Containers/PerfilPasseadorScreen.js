@@ -58,9 +58,7 @@ class  PerfilPasseadorScreen extends Component {
         <Container style={{ backgroundColor: 'red' }}>
           <Header style={{ backgroundColor: 'red', marginTop: 15 }}>
             <Left>
-              <Button onPress={() => navigate('MenuPasseadorScreen')}>
-              <Icon style={{color:Colors.snow}}name='arrow-back' />
-              </Button>
+              <Icon name='arrow-back' onPress={() => navigate('MenuPasseadorScreen')} />
             </Left>
             <Body>
               <Title style={{color: Colors.snow, alignSelf: "auto"}}>{"Perfil"}</Title>
@@ -110,22 +108,24 @@ class  PerfilPasseadorScreen extends Component {
           </Content>
           <Footer style={{ backgroundColor: 'red' }}>
             <FooterTab style={{ backgroundColor: 'red' }}>
-              <Button>
-                <Icon name='person' style={{ color: 'white' }} />
-                <Text style={{ color: 'white' }}>{strings('Footer.profile_button')}</Text>
-              </Button>
-              <Button onPress={() => navigate('HistoricoPasseadorScreen')}>
-                <Icon name='md-calendar' style={{ color: 'white' }} />
-                <Text style={{ color: 'white' }}>{strings('Footer.history_button')}</Text>
-              </Button>
-              <Button onPress={() => navigate('ExtratoScreen')}>
-                <Icon name='ios-paper' style={{ color: 'white' }} />
-                <Text style={{ color: 'white' }}>{strings('Footer.extract_button')}</Text>
-              </Button>
-              <Button onPress={() => navigate('PasseadorPasseiosScreen')}>
-                <Icon name='walk' style={{ color: 'white' }} />
-                <Text style={{ color: 'white' }}>{strings('Footer.walks_button')}</Text>
-              </Button>
+                  <Button onPress={() => navigate('MenuPasseadorScreen')}>
+                    <Icon name='md-person' type='Ionicons' style={{color:'white'}}/>
+                    <Text style={{color:'white'}}>{strings('Footer.menu_button')}</Text>
+                  </Button>
+                  <Button onPress={() => navigate('HistoricoPasseadorScreen')}>
+                    <Icon name='md-calendar' style={{color:'white'}}/>
+                    <Text style={{color:'white'}}>{strings('Footer.history_button')}</Text>
+                  </Button>
+                  <Button badge vertical onPress={() => navigate('PasseadorPasseiosScreen')}>
+                    <Badge style={{backgroundColor:'black'}}><Text style={{color:'white'}}>2</Text></Badge>
+                    <Icon name='md-list-box' type='Ionicons' style={{color:'white'}}/>
+                    <Text style={{color:'white'}}>{strings('Footer.assign_button')}</Text>
+                  </Button>
+                  <Button badge vertical onPress={() => navigate('PasseiosLivresScreen')}>
+                  <Badge style={{backgroundColor:'black'}}><Text style={{color:'white'}}>7</Text></Badge>
+                    <Icon name='walk' style={{color:'white'}}/>
+                    <Text style={{color:'white'}}>{strings('Footer.available_button')}</Text>
+                  </Button>
             </FooterTab>
           </Footer>
         </Container>

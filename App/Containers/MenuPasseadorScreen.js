@@ -92,15 +92,15 @@ class MenuPasseadorScreen extends Component {
                 </Button>
               </ListItem>
             </List>
-            <Button style={styles.botao}>
+            <Button onPress={() => navigate('LoginScreen')} style={styles.botao}>
               <Text>Deslogar</Text>
             </Button>
           </Content>
           <Footer style={{backgroundColor:'red'}}>
                 <FooterTab style={{backgroundColor:'red'}}>
-                  <Button onPress={() => navigate('PerfilPasseadorScreen')}>
+                  <Button onPress={() => navigate('MenuPasseadorScreen')}>
                     <Icon name='md-person' type='Ionicons' style={{color:'white'}}/>
-                    <Text style={{color:'white'}}>{strings('Footer.profile_button')}</Text>
+                    <Text style={{color:'white'}}>{strings('Footer.menu_button')}</Text>
                   </Button>
                   <Button onPress={() => navigate('HistoricoPasseadorScreen')}>
                     <Icon name='md-calendar' style={{color:'white'}}/>

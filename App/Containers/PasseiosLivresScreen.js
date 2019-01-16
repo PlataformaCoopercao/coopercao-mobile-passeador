@@ -62,7 +62,7 @@ class PasseadorPasseiosScreen extends Component {
         <Root>
           <Container style={{backgroundColor:'red'}}>
           <Header style={{backgroundColor:'red', marginTop: 22}}>
-              <Left><Icon name='arrow-back' /></Left>
+              <Left><Icon name='arrow-back' onPress={() => navigate('MenuPasseadorScreen')} /></Left>
               <Body><Title style={{left: -90, color: Colors.snow}}>{strings('PasseiosLivresScreen.availableTitle')}</Title></Body>
             </Header>
             <Content padder style={{backgroundColor: 'white'}}>
@@ -95,9 +95,9 @@ class PasseadorPasseiosScreen extends Component {
             </Content>
             <Footer style={{backgroundColor:'red'}}>
                 <FooterTab style={{backgroundColor:'red'}}>
-                  <Button onPress={() => navigate('PerfilPasseadorScreen')}>
+                  <Button onPress={() => navigate('MenuPasseadorScreen')}>
                     <Icon name='md-person' type='Ionicons' style={{color:'white'}}/>
-                    <Text style={{color:'white'}}>{strings('Footer.profile_button')}</Text>
+                    <Text style={{color:'white'}}>{strings('Footer.menu_button')}</Text>
                   </Button>
                   <Button onPress={() => navigate('HistoricoPasseadorScreen')}>
                     <Icon name='md-calendar' style={{color:'white'}}/>
