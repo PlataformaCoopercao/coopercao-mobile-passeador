@@ -95,5 +95,13 @@
         "onewayWalk": "One-Way Walks",
         "penalties": "Penalties",
         "total": "Total" 
+    },
+    "MenuPasseadorScreen":{
+        "welcome": "Welcome ",
+        "scheduledWalks": "Scheduled Walks",
+        "freeWalks": "Free Walks",
+        "walksHistory": "Walks History",
+        "profile": "Profile",
+        "logout": "Logout"
     }
   }

@@ -1,16 +1,13 @@
 import React, { Component } from 'react'
-import { ScrollView, KeyboardAvoidingView } from 'react-native'
+import { Alert } from 'react-native'
 import { connect } from 'react-redux'
-import {Container, Header, Title, Content, Body, Text, Icon,
-  Left, Right, Accordion, Root, Button, ActionSheet, Subtitle, Card,
-   CardItem, List, Footer, FooterTab, Badge, Spinner, Form, Item, Label, Input, ListItem, Thumbnail, InputGroup
+import {Container, Header, Content, Body, Text, Left, Right,
+  Button, List, Spinner, Input, ListItem, Thumbnail, InputGroup
 } from 'native-base'
-import { Font, AppLoading, Expo } from "expo"
-import { Colors } from '../Themes/'
-import { StackNavigator, NavigationActions } from "react-navigation"
-// Add Actions - replace 'Your' with whatever your reducer is called :)
-// import YourActions from '../Redux/YourRedux'
+import { Font } from "expo"
 import { strings } from '../locales/i18n';
+import I18n from 'react-native-i18n';
+import * as firebase from 'firebase';
 // Styles
 import styles from './Styles/PasseiosLivresScreenStyle'
 
@@ -20,12 +17,15 @@ class LoginScreen extends Component {
     this.state = {
       fontLoading: true, // to load font in expo
       clicked: '',
-      edited: ''
+      edited: '',
+      email: '',
+      senha: '',
+      remount: 1
     };
   }
 
   // required to load native-base font in expo
-  async componentWillMount() {
+  async componentDidMount() {
     await Font.loadAsync({
       Roboto: require("native-base/Fonts/Roboto.ttf"),
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
@@ -33,12 +33,42 @@ class LoginScreen extends Component {
     });
     this.setState({ fontLoading: false });
   }
+
+  forceRemount() {
+    this.setState({
+      remount: this.state.remount + 1
+    });
+    this.componentDidMount();
+    this.render();
+  }
+
+  setLocalePT(){
+    I18n.locale = 'pt-BR';
+    this.forceRemount();
+    console.log(I18n.currentLocale())
+  }
+
+  setLocaleEN(){
+    I18n.locale = 'en';
+    this.forceRemount();
+    console.log(I18n.currentLocale())
+  }
+
+  onEntrarPress = () => {
+    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.senha)
+    .then(() => {
+      this.props.navigation.navigate('MenuPasseadorScreen');
+    }, (error) => {
+      Alert.alert(error.message);
+    });
+  }
+
   render () {
     const {navigate} = this.props.navigation;
     if (this.state.fontLoading) {
       return (
         <Container>
-        <Header />
+        <Header style={{ backgroundColor: 'red', marginTop: 15 }}/>
         <Content>
           <Spinner color='red' />
         </Content>
@@ -46,51 +76,37 @@ class LoginScreen extends Component {
       );
     } else {
     return (
-        // <KeyboardAvoidingView behavior='position'>
-        //   <View style={styles.logoContainer} >
-        //     <Image source = {Images.logoCoopercao} style={styles.logo}/>
-        //   </View>
-
-        //   <View style={styles.inputContainer}>
-        //     <Text style={styles.inputText}>Login</Text>
-        //     <TextInput placeholder={'Email'} placeholderTextColor={Colors.coal} style={styles.input}/>
-        //   </View>
-
-        //   <View style={styles.inputContainer}>
-        //   <Text style={styles.inputText}>Senha</Text>
-        //     <TextInput style={styles.input}
-        //      placeholder={'senha'} secureTextEntry={true} placeholderTextColor={Colors.coal}/>
-        //   </View>
-          
-        //   <TouchableOpacity style ={styles.btnEntrar} >
-        //     <Text style={styles.textEntrar}>Entrar</Text>
-        //   </TouchableOpacity>
-        //   <View>
-        //   <TouchableOpacity style ={styles.btnOutros} >
-        //     <Text style={styles.textOutros}>Primeiro Acesso</Text>
-        //   </TouchableOpacity>
-        //   <TouchableOpacity style ={styles.btnOutros} >
-        //     <Text style={styles.textOutros}>Esqueci minha senha</Text>
-        //   </TouchableOpacity>
-        //   </View>
-        // </KeyboardAvoidingView>
         <Container>
+          <Header style={{ backgroundColor: 'white', marginTop: 22}}>
+          <Left>
+      <Button onPress={() => this.setLocalePT()} style={{ backgroundColor:'red' }}>
+      <Text>{'PT'}</Text>
+      </Button>
+      </Left>
+      <Right>
+      <Button onPress={() => this.setLocaleEN()} style={{ backgroundColor:'red' }}>
+      <Text>{'EN'}</Text>
+      </Button>
+      </Right>
+          </Header>
           <Content style={{alignContent:"stretch"}}>
           <Thumbnail style={{alignSelf:'center', height: 250, width: 250}} source={require('../Images/logoCoopercao.png')}/>
         <List>
           <ListItem>
               <InputGroup>
-                <Input placeholder={strings('LoginScreen.email')} keyboardType='email-address' autoCorrect={false} autoCapitalize='none'/>
+                <Input placeholder={strings('LoginScreen.email')} keyboardType='email-address' autoCorrect={false}
+                autoCapitalize='none' onChangeText={(text) => {this.setState({email: text})}} />
               </InputGroup>
           </ListItem> 
           <ListItem>
               <InputGroup>
-                <Input placeholder={strings('LoginScreen.password')} autoCapitalize='none' autoCorrect={false} secureTextEntry={true}/>
+                <Input placeholder={strings('LoginScreen.password')} autoCapitalize='none' autoCorrect={false}
+                secureTextEntry={true} onChangeText={(text) => {this.setState({senha: text})}}/>
               </InputGroup>
           </ListItem>
       </List>
-      <Button style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20, backgroundColor:'red' }} onPress={() => navigate('MenuPasseadorScreen')}>
-      <Text>{strings('LoginScreen.enter')}</Text>
+      <Button style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20, backgroundColor:'red' }} onPress={this.onEntrarPress}>
+      <Text>{strings('LoginScreen.enter')}</Text>   
       </Button>
       <Body/>
       <Right>

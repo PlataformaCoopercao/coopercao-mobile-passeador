@@ -95,5 +95,13 @@
       "onewayWalk": "Passeios Avulso",
       "penalties": "Multas",
       "total": "Total" 
-  }
+  },
+  "MenuPasseadorScreen":{
+    "welcome": "Bem Vindo ",
+    "scheduledWalks": "Passeios Agendados",
+    "freeWalks": "Passeios Livres",
+    "walksHistory": "Histórico de Passeios",
+    "profile": "Perfil",
+    "logout": "Deslogar"
+}
 }
