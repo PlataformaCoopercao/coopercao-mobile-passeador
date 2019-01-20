@@ -24,6 +24,11 @@ class MenuPasseadorScreen extends Component {
     };
   }
 
+  onLogoffPress = () => {
+    firebase.auth().signOut();
+    this.props.navigation.navigate('LoginScreen');
+  }
+
   onValueChange(value: string) {
     this.setState({
       selected: value
@@ -98,7 +103,7 @@ class MenuPasseadorScreen extends Component {
                 </Button>
               </ListItem>
             </List>
-            <Button onPress={() => navigate('LoginScreen')} style={styles.botao}>
+            <Button onPress={this.onLogoffPress} style={styles.botao}>
               <Text>{strings('MenuPasseadorScreen.logout')}</Text>
             </Button>
           </Content>
