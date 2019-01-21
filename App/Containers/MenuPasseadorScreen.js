@@ -117,13 +117,11 @@ class MenuPasseadorScreen extends Component {
                     <Icon name='md-calendar' style={{color:'white'}}/>
                     <Text style={{color:'white'}}>{strings('Footer.history_button')}</Text>
                   </Button>
-                  <Button badge vertical onPress={() => navigate('PasseadorPasseiosScreen')}>
-                    <Badge style={{backgroundColor:'black'}}><Text style={{color:'white'}}>2</Text></Badge>
+                  <Button onPress={() => navigate('PasseadorPasseiosScreen')}>
                     <Icon name='md-list-box' type='Ionicons' style={{color:'white'}}/>
                     <Text style={{color:'white'}}>{strings('Footer.assign_button')}</Text>
                   </Button>
-                  <Button badge vertical onPress={() => navigate('PasseiosLivresScreen')}>
-                    <Badge style={{backgroundColor:'black'}}><Text style={{color:'white'}}>7</Text></Badge>
+                  <Button onPress={() => navigate('PasseiosLivresScreen')}>
                     <Icon name='walk' style={{color:'white'}}/>
                     <Text style={{color:'white'}}>{strings('Footer.available_button')}</Text>
                   </Button>
