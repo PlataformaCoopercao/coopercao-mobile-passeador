@@ -84,7 +84,7 @@ class  PerfilPasseadorScreen extends Component {
               <Icon name='arrow-back' style={{ marginHorizontal: 10}} onPress={() => navigate('MenuPasseadorScreen')} />
             </Left>
             <Body>
-              <Title style={{ marginHorizontal: 10, color: Colors.snow, alignSelf: "auto"}}>{"Perfil"}</Title>
+              <Title style={{ marginHorizontal: 10, color: Colors.snow, alignSelf: "auto"}}>{strings('PerfilPasseadorScreen.profile')}</Title>
             </Body>
           </Header>
           <Content padder style={{ backgroundColor: 'white', alignContent: "stretch" }}>

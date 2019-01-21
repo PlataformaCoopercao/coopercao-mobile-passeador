@@ -106,6 +106,7 @@
     "logout": "Logout"
   },
   "PerfilPasseadorScreen": {
+    "profile": "Profile",
     "email": "Email: ",
     "address": "Address: ",
     "cpf": "CPF: ",

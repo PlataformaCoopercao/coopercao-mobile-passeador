@@ -106,6 +106,7 @@
     "logout": "Deslogar"
   },
   "PerfilPasseadorScreen": {
+    "profile": "Perfil",
     "email": "Email: ",
     "address": "Endereço: ",
     "cpf": "CPF: ",
