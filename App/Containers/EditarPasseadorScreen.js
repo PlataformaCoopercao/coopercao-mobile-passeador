@@ -28,7 +28,6 @@ class  EditarPasseadorScreen extends Component {
       uid: firebase.auth().currentUser.uid,
       fontLoading: true, // to load font in expo
       nome: '',
-      email: '',
       cpf: '',
       genero: '',
       estadoCivil: '',
@@ -45,10 +44,10 @@ class  EditarPasseadorScreen extends Component {
 
   getWalkerData () {
     axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/getWalker', {uid: firebase.auth().currentUser.uid})
-    .then(response => this.setState({nome: response.data.name, email: response.data.email, cpf: response.data.cpf, genero: response.data.gender,
+    .then(response => this.setState({nome: response.data.name, cpf: response.data.cpf, genero: response.data.gender,
     estadoCivil: response.data.civilState, profissao: response.data.profession, cep: response.data.address.cep, bairro: response.data.address.area,
     rua: response.data.address.street, numero: response.data.address.num, complemento: response.data.address.compl, telefone: response.data.phoneNumber,
-    uri: response.data.photoUrl})).catch((error) => {Alert.alert(error.message)});
+    uri: response.data.photoURL})).catch((error) => {Alert.alert(error.message)});
   this.update()
   }
 
@@ -71,13 +70,12 @@ class  EditarPasseadorScreen extends Component {
       address.compl = this.state.complemento;
     let walker = {}
       walker.name = this.state.nome,
-      walker.email = this.state.email,
       walker.cpf = this.state.cpf,
       walker.gender = this.state.genero,
       walker.civilState = this.state.estadoCivil,
       walker.profession = this.state.profissao,
       walker.phoneNumber = this.state.telefone,
-      walker.photoUrl = this.state.uri,
+      walker.photoURL = this.state.uri,
       walker.address = address;
     let collection = {}
       collection.uid = this.state.uid,
@@ -141,13 +139,6 @@ class  EditarPasseadorScreen extends Component {
               <InputGroup>
                 <Input placeholder={strings('EditarPasseadorScreen.name')} onChangeText={(text) => { this.setState({ nome: text }) }}>
                 {this.state.nome}</Input>
-              </InputGroup>
-            </ListItem>
-            <ListItem>
-              <InputGroup>
-                <Input placeholder={strings('EditarPasseadorScreen.email')} keyboardType='email-address' autoCapitalize='none' autoCorrect={false}
-                onChangeText={(text) => { this.setState({ email: text }) }} >
-                {this.state.email}</Input>
               </InputGroup>
             </ListItem>
             <ListItem>
@@ -225,12 +216,12 @@ class  EditarPasseadorScreen extends Component {
                     <Icon name='md-calendar' style={{color:'white'}}/>
                     <Text style={{color:'white'}}>{strings('Footer.history_button')}</Text>
                   </Button>
-                  <Button badge vertical onPress={() => navigate('PasseadorPasseiosScreen')}>
+                  <Button vertical onPress={() => navigate('PasseadorPasseiosScreen')}>
                     <Badge style={{backgroundColor:'black'}}><Text style={{color:'white'}}>2</Text></Badge>
                     <Icon name='md-list-box' type='Ionicons' style={{color:'white'}}/>
                     <Text style={{color:'white'}}>{strings('Footer.assign_button')}</Text>
                   </Button>
-                  <Button badge vertical onPress={() => navigate('PasseiosLivresScreen')}>
+                  <Button vertical onPress={() => navigate('PasseiosLivresScreen')}>
                   <Badge style={{backgroundColor:'black'}}><Text style={{color:'white'}}>7</Text></Badge>
                     <Icon name='walk' style={{color:'white'}}/>
                     <Text style={{color:'white'}}>{strings('Footer.available_button')}</Text>
