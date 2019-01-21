@@ -103,5 +103,22 @@
     "walksHistory": "Histórico de Passeios",
     "profile": "Perfil",
     "logout": "Deslogar"
+},
+"EditarPasseadorScreen":{
+    "edit": "Editar perfil",
+    "changePhoto": "Alterar foto",
+    "name": "Nome",
+    "email": "Email",
+    "cpf": "CPF",
+    "gender": "Gênero",
+    "civilState": "Estado civil",
+    "profession": "Profissão",
+    "cep": "CEP",
+    "area": "Bairro",
+    "street": "Rua",
+    "number": "Número",
+    "complement": "Complemento",
+    "phone": "Telefone",
+    "save": "Salvar"
 }
 }

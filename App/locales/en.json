@@ -103,5 +103,22 @@
         "walksHistory": "Walks History",
         "profile": "Profile",
         "logout": "Logout"
+    },
+    "EditarPasseadorScreen":{
+        "edit": "Edit profile",
+        "changePhoto": "Change photo",
+        "name": "Name",
+        "email": "Email",
+        "cpf": "CPF",
+        "gender": "Gender",
+        "civilState": "Civil state",
+        "profession": "Profession",
+        "cep": "CEP",
+        "area": "Area",
+        "street": "Street",
+        "number": "Number",
+        "complement": "Complement",
+        "phone": "Phone",
+        "save": "Save"
     }
   }
