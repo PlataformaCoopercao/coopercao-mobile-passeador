@@ -7,6 +7,9 @@ import {Container, Header, Title, Content, Body, Text, Icon,
 import { Font, AppLoading, Expo } from "expo"
 import { connect } from 'react-redux'
 import { Colors } from '../Themes/'
+import axios from 'axios';
+import * as firebase from 'firebase';
+import { Alert } from 'react-native';
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
 import { strings } from '../locales/i18n';
@@ -24,13 +27,15 @@ class PasseioScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      walkId: '',
       time: '',
       horaInicio: '',
       horaFinal: '',
       btnIniciar: true,
       fontLoading: true, // to load font in expo
       clicked: '',
-      edited: ''
+      edited: '',
+      walkState :{}
     };
   }
   async componentWillMount() {
@@ -40,6 +45,24 @@ class PasseioScreen extends Component {
       Ionicons: require("@expo/vector-icons/fonts/Ionicons.ttf")
     });
     this.setState({ fontLoading: false });
+  }
+
+  loadWalk(){
+    var url = 'https://us-central1-coopercao-backend.cloudfunctions.net/getPasseiosAtribuidos';
+    axios.post(url, { passeadorKey: firebase.auth().currentUser.uid })
+      .then((response) => {
+        for (i = 0; i < response.data.length; i++) {
+          if(response.data[i].id == this.state.walkID ){
+            this.state.walkState = this.data[i];
+          }
+        }
+        //resposta = response.data;
+        //this.forceUpdate();
+        //CONSERTAR CHAMADA. O POST NAO ESTA RETORNANDO O RESULTADO CORRETO?
+      })
+      .catch((error) => {
+        Alert.alert(error.message);
+      });
   }
 
   GetTime() {
@@ -76,6 +99,9 @@ class PasseioScreen extends Component {
 
   componentDidMount() {
     this.Clock = setInterval( () => this.GetTime(), 1000 );
+    
+    this.state.walkId = this.props.navigation.getParam('walkId', '0');
+    this.loadWalk();
   }
 
   componentWillUnmount(){
@@ -208,12 +234,12 @@ class PasseioScreen extends Component {
                     <Text style={{color:'white'}}>{strings('Footer.history_button')}</Text>
                   </Button>
                   <Button badge vertical onPress={() => navigate('PasseadorPasseiosScreen')}>
-                    <Badge style={{backgroundColor:'black'}}><Text style={{color:'white'}}>2</Text></Badge>
+                    <Badge style={{backgroundColor:'black'}}><Text style={{color:'white'}}x></Text></Badge>}
                     <Icon name='md-list-box' type='Ionicons' style={{color:'white'}}/>
                     <Text style={{color:'white'}}>{strings('Footer.assign_button')}</Text>
                   </Button>
                   <Button badge vertical onPress={() => navigate('PasseiosLivresScreen')}>
-                  <Badge style={{backgroundColor:'black'}}><Text style={{color:'white'}}>7</Text></Badge>
+                  <Badge style={{backgroundColor:'black'}}><Text style={{color:'white'}}>x</Text></Badge>
                     <Icon name='walk' style={{color:'white'}}/>
                     <Text style={{color:'white'}}>{strings('Footer.available_button')}</Text>
                   </Button>

@@ -48,6 +48,12 @@ class PasseadorPasseiosScreen extends Component {
     this.setState({ fontLoading: false });
   }
 
+  startSoloWalk(walkId) {
+    this.props.navigation.navigate('PasseioScreen', {
+      walkId: walkId
+    });
+  }
+
   render() {
     const {navigate} = this.props.navigation;
     if (this.state.fontLoading) {
@@ -64,7 +70,7 @@ class PasseadorPasseiosScreen extends Component {
         <Root>
           <Container style={{backgroundColor:'red'}}>
           <Header style={{backgroundColor:'red', marginTop: 22}}>
-              <Left><Icon name='arrow-back' onPress={() => navigate('MenuPasseadorScreen')} /></Left>
+              <Left><Icon name='arrow-back' onPress={() => this.startSoloWalk("gottem")} /></Left>
               <Body><Title style={{left: -90, color: Colors.snow}}>{strings('PasseadorPasseiosScreen.assignedWalks')}</Title></Body>
               
             </Header>
