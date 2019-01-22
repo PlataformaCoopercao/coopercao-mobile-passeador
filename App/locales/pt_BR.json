@@ -38,7 +38,9 @@
     "assignedWalks": "Passeios Atribuídos",
     "startWalk": "Iniciar Passeio",
     "requestReplace": "Requisitar Substituição",
-    "cancelWalk": "Cancelar Passeio"
+    "cancelWalk": "Cancelar Passeio",
+    "back": "Voltar",
+    "walk": "Passeio"
   },
   "LoginScreen": {
     "email": "Email",

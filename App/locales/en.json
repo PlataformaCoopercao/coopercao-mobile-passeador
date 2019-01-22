@@ -38,7 +38,9 @@
     "assignedWalks": "Assigned Walks",
     "startWalk": "Start Walk",
     "requestReplace": "Request Replacement",
-    "cancelWalk": "Cancel Walk"
+    "cancelWalk": "Cancel Walk",
+    "back": "Back",
+    "walk": "Walk"
   },
   "LoginScreen": {
     "email": "Email",

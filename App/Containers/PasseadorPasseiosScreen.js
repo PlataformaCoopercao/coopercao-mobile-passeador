@@ -11,10 +11,12 @@ import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
 import { strings } from '../locales/i18n';
+import axios from 'axios';
+import * as firebase from 'firebase';
 // Styles
 import styles from './Styles/PasseadorPasseiosScreenStyle'
 
-var BUTTONS = ["Iniciar Passeio", "Requisitar Substituição", "Cancelar Passeio", "Cancelar"];
+var BUTTONS = [strings('PasseadorPasseiosScreen.startWalk'), strings('PasseadorPasseiosScreen.requestReplace'), strings('PasseadorPasseiosScreen.cancelWalk'), strings('PasseadorPasseiosScreen.back')];
 var DESTRUCTIVE_INDEX = 2;
 var CANCEL_INDEX = 3;
 const dataArrayPasseios = [
@@ -79,7 +81,7 @@ class PasseadorPasseiosScreen extends Component {
                             {
                               options: BUTTONS,
                               cancelButtonIndex: CANCEL_INDEX,
-                              title: "Passeio"
+                              title: strings('PasseadorPasseiosScreen.walk')
                             },
                             buttonIndex => {
                               this.setState({ clicked: BUTTONS[buttonIndex] });
