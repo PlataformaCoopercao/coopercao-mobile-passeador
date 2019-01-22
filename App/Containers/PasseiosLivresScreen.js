@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { ScrollView, Alert} from 'react-native'
 import { connect } from 'react-redux'
 import {Container, Header, Title, Content, Body, Text, Icon,
-  Left, Right, Root, Button, ActionSheet, Card,
-   CardItem, List, Footer, FooterTab, Badge, Spinner
+  Left, Right, Root, Button, ActionSheet, Card, List,
+   CardItem, ListItem, Footer, FooterTab, Badge, Spinner
 } from 'native-base'
 import { Font } from "expo"
 import { Colors } from '../Themes/'
@@ -32,12 +32,16 @@ class PasseiosLivresScreen extends Component {
     .then((response) =>{
       if(response.data != null){
         for(x = 0; x < response.data.length; x++){
-          this.state.dataArrayPasseios[x] = response.data[x]
+          this.state.dataArrayPasseios[x] = 
+          'Cachorro: '+ response.data[x].dog.name + 
+            '\nData: '+ response.data[x].date + '  Horário: '+ response.data[x].time
+          
         }
+        this.forceUpdate()
       }else{
         console.log('Não tem passeios')
       }
-    })
+    }).catch((error) => {Alert.alert(error.message)});
   }
 
   // required to load native-base font in expo
@@ -75,28 +79,25 @@ class PasseiosLivresScreen extends Component {
               <ScrollView>
                 <List dataArray={this.state.dataArrayPasseios}
                   renderRow={(item) =>
-                    <ListItem>
                     <Card>
                       <CardItem style={{justifyContent: 'space-between'}}>
                       <Text>{item}</Text>
-                      {<Button transparent dark
+                      <Button transparent dark
                         onPress={() =>
                           ActionSheet.show(
                             {
                               options: BUTTONS,
                               cancelButtonIndex: CANCEL_INDEX,
-                              title: "Passeio"
+                              title: strings('PasseiosLivresScreen.availableTitle')
                             },
                             buttonIndex => {
                               this.setState({ clicked: BUTTONS[buttonIndex] });
                             }
-                          )}
-                      >
+                          )}>
                         <Icon type='Ionicons' name='ios-paw' />
-                      </Button>}
+                      </Button>
                       </CardItem>
                     </Card>
-                    </ListItem>
                   }>
                 </List>
               </ScrollView>
