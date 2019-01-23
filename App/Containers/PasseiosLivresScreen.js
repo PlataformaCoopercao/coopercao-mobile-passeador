@@ -37,8 +37,9 @@ class PasseiosLivresScreen extends Component {
         for(x = 0; x < response.data.length; x++){
           this.state.walks[x] = response.data[x]
           this.state.dataArrayPasseios[x] = 
-          'Cachorro: '+ response.data[x].dog.name + 
-            '\nData: '+ response.data[x].date + '  Horário: '+ response.data[x].time
+          strings('PasseiosLivresScreen.dog') + response.data[x].dog.name + 
+            '\n' + strings('PasseiosLivresScreen.date') + response.data[x].date + '  ' +
+            strings('PasseiosLivresScreen.time') + response.data[x].time
           
         }
         this.forceUpdate()

@@ -1,4 +1,8 @@
 {
+  "expoServerPort": 19000,
+  "expoServerNgrokUrl": "https://ub-nzc.anonymous.coopercao-passeador.exp.direct",
+  "packagerNgrokUrl": "https://packager.ub-nzc.anonymous.coopercao-passeador.exp.direct",
+  "ngrokPid": 6328,
   "packagerPort": 19001,
   "packagerPid": 2972,
   "expoServerNgrokUrl": "https://ub-nzc.coopercaoapp.coopercao-mobile-passeador.exp.direct",

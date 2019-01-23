@@ -37,7 +37,11 @@
     "requestReplace": "Request Replacement",
     "cancelWalk": "Cancel Walk",
     "back": "Back",
-    "walk": "Walk"
+    "walk": "Walk",
+    "dog" : "Dog: ",
+    "date": "Date: ",
+    "time": "Time: ",
+    "address": "Address: "
   },
   "LoginScreen": {
     "email": "Email",
@@ -88,7 +92,10 @@
   },
   "PasseiosLivresScreen": {
     "assignWalk": "Assign Walk",
-    "availableTitle": "Available Walks"
+    "availableTitle": "Available Walks",
+    "dog": "Dog: ",
+    "date": "Date: ",
+    "time": "Time: "
   },
   "HistoricoClienteScreen": {
     "search": "Search"
