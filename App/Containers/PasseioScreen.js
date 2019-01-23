@@ -35,10 +35,13 @@ class PasseioScreen extends Component {
       fontLoading: true, // to load font in expo
       clicked: '',
       edited: '',
-      walkState: {}
+      walkState: {},
+      walker: {}
     };
   }
   async componentWillMount() {
+    await this.loadWalk();
+    await this.loadWalker();
     await Font.loadAsync({
       Roboto: require("native-base/Fonts/Roboto.ttf"),
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
@@ -53,23 +56,35 @@ class PasseioScreen extends Component {
     //console.log(this.state.walkState);
   }
 
-  loadWalk(){
+  async loadWalk(){
     var url = 'https://us-central1-coopercao-backend.cloudfunctions.net/getPasseiosAtribuidos';
-    axios.post(url, { passeadorKey: firebase.auth().currentUser.uid })
+    await axios.post(url, { passeadorKey: firebase.auth().currentUser.uid })
       .then((response) => {
-        console.log(this.state.walkId);
-        console.log(response.data[0].id);
+        var resposta = {};
+        var cursed = this.state.walkId;     //ignorar nome da variavel
         for (i = 0; i < response.data.length; i++) {
-          if(response.data[i].id === this.state.walkID ){
-            console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");    //COMO FAZER ESSE IF FUNCIONAR?
-            this.setState({
-              walkState: response.data[i]
-            });
+          var pls = response.data[i].id;    //ignorar nome da variavel
+          if(pls == cursed ){
+            //console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            //console.log(pls);
+            //console.log(cursed);
+            resposta = response.data[i];
+            this.state.walkState = resposta;
           }
         }
-        //console.log(response.data[0].id);
-        //console.log(this.state.walkId);
-        //console.log(this.state.walkState);
+        endereco = resposta.address.street + ", Num: " + resposta.address.num +"\n" 
+        + resposta.address.district + "\n" + resposta.address.compl;
+      })
+      .catch((error) => {
+        console.warn(error.message);
+      });
+  }
+
+  loadWalker(){
+    var url = 'https://us-central1-coopercao-backend.cloudfunctions.net/getWalker'
+    axios.post(url, { uid: firebase.auth().currentUser.uid })
+      .then((response) => {
+        this.state.walker = response.data
       })
       .catch((error) => {
         console.warn(error.message);
@@ -112,7 +127,6 @@ class PasseioScreen extends Component {
     this.Clock = setInterval( () => this.GetTime(), 1000 );
     
     this.state.walkId = this.props.navigation.getParam('walkId', '0');
-    this.loadWalk();
   }
 
   componentWillUnmount(){
@@ -199,22 +213,23 @@ class PasseioScreen extends Component {
             <ScrollView>
                 <Card>
                   <CardItem>
-                    <Thumbnail large source={{uri: fotoPasseador}} borderRadius='20'/>
-                    <Right><Text style={{justifyContent:'center'}}> {passeador}</Text></Right>
+                    <Thumbnail large source={{uri: this.state.walker.photoUrl}} borderRadius='20'/>
+                    <Right><Text style={{justifyContent:'center'}}> {this.state.walker.name}</Text></Right>
                   </CardItem>
                   <CardItem>
-                    <Thumbnail large source={{uri: fotoCao}} borderRadius='20'/>
-                    <Right><Text style={{justifyContent:'center'}}>{cao}</Text></Right>
+                    <Thumbnail large source={{uri: this.state.walkState.dog.photoUrl}} borderRadius='20'/>
+                    <Right><Text style={{justifyContent:'center'}}>{this.state.walkState.dog.name}</Text></Right>
                   </CardItem>
                   <CardItem>
                     <Label> {strings('PasseioScreen.date')}: </Label>
-                    <Text style={{justifyContent:'center'}}>{data}</Text>
+                    <Text style={{justifyContent:'center'}}>{this.state.walkState.date}</Text>
                     <Right><Label> {strings('PasseioScreen.time')}: </Label></Right>
-                    <Text style={{justifyContent:'center'}}>{hora}</Text>
+                    <Text style={{justifyContent:'center'}}>{this.state.walkState.time}</Text>
                   </CardItem>
                   <CardItem>
-                    <Label> {strings('PasseioScreen.address')}: </Label>
-                    <Text style={{justifyContent:'center'}}>{endereco}</Text>
+                    <Label style={{textAlign: 'auto', alignSelf: 'flex-start'}}>
+                     {strings('PasseioScreen.address')}: </Label>
+                    <Text>{endereco}</Text>
                   </CardItem>
                   <CardItem>
                   <Label> {strings('PasseioScreen.start')}: </Label>
