@@ -88,7 +88,7 @@
     "end": "Fim",
     "begin": "Iniciar",
     "finalize": "Finalizar",
-    "doFeedback": "Realizar feedback"
+    "ceaseSend": "Encerrar e enviar"
   },
   "PasseiosLivresScreen": {
     "assignWalk": "Atribuir Passeio",

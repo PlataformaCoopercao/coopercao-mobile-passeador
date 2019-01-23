@@ -7,11 +7,15 @@ import {Container, Header, Title, Content, Body, Text, Icon,
 import { Font, AppLoading, Expo } from "expo"
 import { connect } from 'react-redux'
 import { Colors } from '../Themes/'
+import { Alert } from 'react-native'
+import axios from 'axios';
+import * as firebase from 'firebase';
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
 import { strings } from '../locales/i18n';
 // Styles
 import styles from './Styles/PasseioScreenStyle'
+
 
 var passeador = "João Bezerros"
 var cao = "Managarmr"
@@ -20,6 +24,10 @@ var hora = "10:00"
 var endereco = "Rua dos Bobos, nº 0"
 var fotoPasseador = 'https://randomuser.me/api/portraits/men/66.jpg';
 var fotoCao = 'https://images.dog.ceo/breeds/rottweiler/n02106550_1033.jpg';
+let diffMs;
+let diffHrs;
+let diffDays;
+let diferenca;
 class PasseioScreen extends Component {
   constructor(props) {
     super(props);
@@ -32,7 +40,9 @@ class PasseioScreen extends Component {
       clicked: '',
       edited: '',
       walkState: {},
-      walker: {}
+      walker: {},
+      dateInicio: new Date(),
+      dateFim: new Date()
     };
   }
   async componentWillMount() {
@@ -44,12 +54,6 @@ class PasseioScreen extends Component {
       Ionicons: require("@expo/vector-icons/fonts/Ionicons.ttf")
     });
     this.setState({ fontLoading: false });
-  }
-
-  teste(){
-    //console.log(this.state.walkId);
-    //console.log()
-    //console.log(this.state.walkState);
   }
 
   async loadWalk(){
@@ -134,12 +138,33 @@ class PasseioScreen extends Component {
       btnColor: '#C1C1C1',
       horaInicio: this.state.time.toString(),
       btnIniciar: !this.state.btnIniciar
-    })
+    });
+    this.state.dateInicio = new Date();
   }
   showTimeFim = () => {
     this.setState({
       horaFinal: this.state.time.toString()
-    })
+    });
+    this.state.dateFim = new Date();
+    diffMs = (this.state.dateFim - this.state.dateInicio);
+    diffHrs = Math.floor((diffMs % 86400000) / 3600000);
+    diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000);
+    diferenca = diffHrs+":"+diffMins;
+  }
+
+  sendWalk = () => {
+    var url = 'https://us-central1-coopercao-backend.cloudfunctions.net/endWalk';
+    let submit = {}
+    submit.walk = this.state.walkState,
+    submit.walk_duration = diferenca,
+    submit.route = "TODO";
+    axios.post(url, submit)
+      .then((response) => {
+        this.props.navigation.navigate('MenuPasseadorScreen');
+      })
+      .catch((error) => {
+        console.warn(error.message);
+      });
   }
 
   render() {
@@ -240,8 +265,8 @@ class PasseioScreen extends Component {
                 <Button style={{ alignSelf: 'center', marginTop: 10, marginBottom: 10, backgroundColor:'red' }} onPress={this.showTimeFim}>
                   <Text>{strings('PasseioScreen.finalize')}</Text>
                 </Button>
-                <Button style={{ alignSelf: 'center', marginTop: 10, marginBottom: 10, backgroundColor:'gray' }} onPress={() => navigate('FeedbackScreen')}>
-                  <Text>{strings('PasseioScreen.doFeedback')}</Text>
+                <Button style={{ alignSelf: 'center', marginTop: 10, marginBottom: 10, backgroundColor:'gray' }} onPress={this.sendWalk}>
+                  <Text>{strings('PasseioScreen.ceaseSend')}</Text>
                 </Button>
               </ScrollView>
             </Content>
