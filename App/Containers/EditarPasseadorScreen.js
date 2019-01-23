@@ -43,7 +43,7 @@ class  EditarPasseadorScreen extends Component {
   }
 
   getWalkerData () {
-    axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/getWalker', {uid: firebase.auth().currentUser.uid})
+    axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/getWalker', {id: firebase.auth().currentUser.uid})
     .then(response => this.setState({nome: response.data.name, cpf: response.data.cpf, genero: response.data.gender,
     estadoCivil: response.data.civilState, profissao: response.data.profession, cep: response.data.address.cep, bairro: response.data.address.area,
     rua: response.data.address.street, numero: response.data.address.num, complemento: response.data.address.compl, telefone: response.data.phoneNumber,

@@ -30,8 +30,8 @@ class PasseiosLivresScreen extends Component {
     };
   }
 
-  getPasseiosLivres(){
-    axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/getPasseiosAberto')
+  getUnassignedWalks(){
+    axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/getUnassignedWalks')
     .then((response) =>{
       if(response.data != null){
         for(x = 0; x < response.data.length; x++){
@@ -50,7 +50,7 @@ class PasseiosLivresScreen extends Component {
   }
 
   getWalkerData () {
-    axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/getWalker', {uid: firebase.auth().currentUser.uid})
+    axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/getWalker', {id: firebase.auth().currentUser.uid})
     .then(response => this.setState({walker: response.data})).catch((error) => {Alert.alert(error.message)});
     this.forceUpdate()
   }
@@ -66,7 +66,7 @@ class PasseiosLivresScreen extends Component {
 
   // required to load native-base font in expo
   async componentDidMount() {
-    this.getPasseiosLivres()
+    this.getUnassignedWalks()
     this.getWalkerData()
     await Font.loadAsync({
       Roboto: require("native-base/Fonts/Roboto.ttf"),

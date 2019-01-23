@@ -36,7 +36,7 @@ class MenuPasseadorScreen extends Component {
   }
 
   getWalkerData () {
-    axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/getWalker', {uid: firebase.auth().currentUser.uid})
+    axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/getWalker', {id: firebase.auth().currentUser.uid})
     .then(response => this.setState({nome: response.data.name, uri: response.data.photoURL})).catch((error) => {Alert.alert(error.message)});
     this.forceUpdate()
   }

@@ -35,7 +35,7 @@ class  PerfilPasseadorScreen extends Component {
   }
 
   getWalkerData () {
-    axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/getWalker', {uid: firebase.auth().currentUser.uid})
+    axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/getWalker', {id: firebase.auth().currentUser.uid})
     .then(response => this.setState({nome: response.data.name, uri: response.data.photoURL, email: response.data.email,
       endereco: response.data.address.street, telefone: response.data.phoneNumber, cpf: response.data.cpf, estadoCivil: response.data.civilState,
       profissao: response.data.profession, bairros: response.data.areas, nota: response.data.score})).catch((error) => {Alert.alert(error.message)});

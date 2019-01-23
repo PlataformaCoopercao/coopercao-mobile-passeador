@@ -34,8 +34,8 @@ class PasseadorPasseiosScreen extends Component {
     };
   }
 
-  getPasseiosAtribuidos() {
-    axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/getPasseiosAtribuidos', {passeadorKey: firebase.auth().currentUser.uid})
+  getAssignedWalks() {
+    axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/getAssignedWalks', {walker_id: firebase.auth().currentUser.uid})
     .then((response) => {
       if(response.data != null) {
         for(x = 0; x < response.data.length; x++) {
@@ -54,7 +54,7 @@ class PasseadorPasseiosScreen extends Component {
 
   // required to load native-base font in expo
   async componentDidMount() {
-    this.getPasseiosAtribuidos()
+    this.getAssignedWalks()
     await Font.loadAsync({
       Roboto: require("native-base/Fonts/Roboto.ttf"),
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
