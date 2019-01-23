@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import StarRating from 'react-native-star-rating';
 import { ScrollView, KeyboardAvoidingView, StyleSheet} from 'react-native'
 import { connect } from 'react-redux'
 import {
@@ -8,7 +8,6 @@ import {
   Subtitle, Card, CardItem, List, Footer, FooterTab,
   Badge, Spinner, Thumbnail, ListItem, Label, Picker
 } from 'native-base'
-import FeedbackNota from '../Components/FeedbackNota';
 import { Font, AppLoading, Expo } from "expo"
 import { Colors } from '../Themes/'
 import { StackNavigator } from "react-navigation"
@@ -23,12 +22,16 @@ class FeedbackScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      key: this.props.navigation.state.params.walkerKey,
       fontLoading: true, // to load font in expo
       clicked: '',
       edited: '',
       selectedItem: undefined,
       selected: 'key0',
       selected2: 'kay0',
+      obs:'',
+      description: '',
+      starCount: 2.5,
       results: {
           items: [],
       },
@@ -43,6 +46,25 @@ class FeedbackScreen extends Component {
     this.setState({
       selected2: value
     });
+  }
+
+  onStarRatingPress(rating) {
+    this.setState({
+      starCount: rating
+    });
+  }
+
+
+  addAvaliacao(key, obs, description, score, pee, poo){
+    var url = 'https://us-central1-coopercao-backend.cloudfunctions.net/walkFeedback';
+    axios.post(url, { key: key, obs: obs, feedback:{description, score}, activities:{pee, poo}, score: score })
+      .then(() => {
+        Alert.alert(strings("FeedbackScreen.confirmFeedback"));
+        this.props.navigation.navigate('MenuPasseadorScreen');
+      })
+      .catch((error) => {
+        Alert.alert(error.message);
+      });
   }
 
   async componentWillMount() {
@@ -77,7 +99,17 @@ class FeedbackScreen extends Component {
             <Content padder style={{backgroundColor: 'white'}}>
             <KeyboardAvoidingView behavior='position'>
               <Body>
-              <FeedbackNota></FeedbackNota>
+              <StarRating
+                disabled={false}
+                emptyStar={'ios-star-outline'}
+                fullStar={'ios-star'}
+                halfStar={'ios-star-half'}
+                iconSet={'Ionicons'}
+                maxStars={5}
+                rating={this.state.starCount}
+                selectedStar={(rating) => this.onStarRatingPress(rating)}
+                fullStarColor={'red'}
+              />
                 <Item>
                 <Text>{strings('FeedbackScreen.pee')}</Text>
               <Picker
@@ -109,12 +141,20 @@ class FeedbackScreen extends Component {
                 <Item>
                   <Label customLabel>{strings('General.comments')}</Label>
                 </Item>
-              </Body>
-              <Form>
-                <Textarea style={{backgroundColor:'lightgrey', borderColor:'black'}} rowSpan={5} bordered placeholder={strings('FeedbackScreen.feedback')} />
+                <Form>
+                <Textarea style={{backgroundColor:'lightgrey', borderColor:'black'}} rowSpan={5} bordered placeholder={strings('FeedbackScreen.feedback')}
+                onChangeText={(text) => { this.setState({ obs: text }) }}/>
               </Form>
+              <Item>
+                  <Label customLabel>{strings('General.feedbackDog')}</Label>
+                </Item>
+              <Form>
+                <Textarea style={{backgroundColor:'lightgrey', borderColor:'black'}} rowSpan={5} bordered placeholder={strings('FeedbackScreen.feedback')} 
+                onChangeText={(text) => { this.setState({ description: text }) }} />
+              </Form>
+              </Body>
               <Body>
-              <Button onPress={()=> navigate('MenuPasseadorScreen')} style={{backgroundColor: 'red',  width: 150, height: 60, marginTop: 20, borderRadius: 5, position: 'relative', justifyContent: 'center'}}>
+              <Button onPress={() => this.addAvaliacao(this.state.key, this.state.obs, this.state.description, this.state.starCount, this.state.selected, this.state.selected2)} style={{backgroundColor: 'red',  width: 150, height: 60, marginTop: 20, borderRadius: 5, position: 'relative', justifyContent: 'center'}}>
                  <Text style={{color:'white', fontSize: 16}}>{strings('General.rate_button')}</Text>
               </Button>
               </Body>

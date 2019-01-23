@@ -8,17 +8,11 @@
     "rate_button": "Rate"
 
   },
-  "FeedbackNota": {
-    "tell": "Tell us how you feel",
-    "worried_label": "Worried",
-    "sad_label": "Sad",
-    "satisfied_label": "Satisfied",
-    "happy_label": "Happy",
-    "surprised_label": "Surprised"
-  },
   "AvaliacaoScreen": {
     "rate": "Rate your dogwalker",
-    "placeHComments": "Leave your comments here"
+    "placeHComments": "Leave your comments here",
+    "feedbackDog": "Dog behaviour: ",
+    "confirmFeedback": "Feedback Confirmed!"
   },
   "Footer": {
     "menu_button": "Menu",
