@@ -35,7 +35,7 @@ class PasseioScreen extends Component {
       fontLoading: true, // to load font in expo
       clicked: '',
       edited: '',
-      walkState :{}
+      walkState: {}
     };
   }
   async componentWillMount() {
@@ -47,21 +47,32 @@ class PasseioScreen extends Component {
     this.setState({ fontLoading: false });
   }
 
+  teste(){
+    //console.log(this.state.walkId);
+    //console.log()
+    //console.log(this.state.walkState);
+  }
+
   loadWalk(){
     var url = 'https://us-central1-coopercao-backend.cloudfunctions.net/getPasseiosAtribuidos';
     axios.post(url, { passeadorKey: firebase.auth().currentUser.uid })
       .then((response) => {
+        console.log(this.state.walkId);
+        console.log(response.data[0].id);
         for (i = 0; i < response.data.length; i++) {
-          if(response.data[i].id == this.state.walkID ){
-            this.state.walkState = this.data[i];
+          if(response.data[i].id === this.state.walkID ){
+            console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");    //COMO FAZER ESSE IF FUNCIONAR?
+            this.setState({
+              walkState: response.data[i]
+            });
           }
         }
-        //resposta = response.data;
-        //this.forceUpdate();
-        //CONSERTAR CHAMADA. O POST NAO ESTA RETORNANDO O RESULTADO CORRETO?
+        //console.log(response.data[0].id);
+        //console.log(this.state.walkId);
+        //console.log(this.state.walkState);
       })
       .catch((error) => {
-        Alert.alert(error.message);
+        console.warn(error.message);
       });
   }
 
@@ -218,7 +229,7 @@ class PasseioScreen extends Component {
                 <Button style={{ alignSelf: 'center', marginTop: 10, marginBottom: 10, backgroundColor:'red' }} onPress={this.showTimeFim}>
                   <Text>{strings('PasseioScreen.finalize')}</Text>
                 </Button>
-                <Button style={{ alignSelf: 'center', marginTop: 10, marginBottom: 10, backgroundColor:'gray' }} onPress={() => navigate('FeedbackScreen')}>
+                <Button style={{ alignSelf: 'center', marginTop: 10, marginBottom: 10, backgroundColor:'gray' }} onPress={ this.teste() /*() => navigate('FeedbackScreen')*/}>
                   <Text>{strings('PasseioScreen.doFeedback')}</Text>
                 </Button>
               </ScrollView>
