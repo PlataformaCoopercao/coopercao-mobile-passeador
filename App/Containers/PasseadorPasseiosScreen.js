@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, KeyboardAvoidingView } from 'react-native'
+import { ScrollView, KeyboardAvoidingView, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import {
   Container, Header, Title, Content, Body, Text, Icon,
@@ -16,30 +16,45 @@ import * as firebase from 'firebase';
 // Styles
 import styles from './Styles/PasseadorPasseiosScreenStyle'
 
-var BUTTONS = [strings('PasseadorPasseiosScreen.startWalk'), strings('PasseadorPasseiosScreen.requestReplace'), strings('PasseadorPasseiosScreen.cancelWalk'), strings('PasseadorPasseiosScreen.back')];
+var BUTTONS = ["Iniciar Passeio", /*strings('PasseadorPasseiosScreen.requestReplace'), strings('PasseadorPasseiosScreen.cancelWalk'),*/ "Voltar"];
 var DESTRUCTIVE_INDEX = 2;
 var CANCEL_INDEX = 3;
-const dataArrayPasseios = [
-  'Data: 12/12/2018    Horário: 10:00\nCão: Barghest\nRua dos Bobos, nº 0',
-  'Data: 12/12/2018    Horário: 10:00\nCão: Garmr\nRua dos Bobos, nº 0',
-  'Data: 12/12/2018    Horário: 10:00\nCão: Will\nRua dos Bobos, nº 0',
-  'Data: 12/12/2018    Horário: 10:00\nCão: CuSith\nRua dos Bobos, nº 0',
-  'Data: 12/12/2018    Horário: 10:00\nCão: Fenrir\nRua dos Bobos, nº 0',
-  'Data: 12/12/2018    Horário: 10:00\nCão: Inugami\nRua dos Bobos, nº 0',
-  'Data: 12/12/2018    Horário: 10:00\nCão: Anubis\nRua dos Bobos, nº 0'
-];
-var tam = dataArrayPasseios.length
+
 class PasseadorPasseiosScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       fontLoading: true, // to load font in expo
       clicked: '',
-      edited: ''
+      edited: '',
+      uid: '',
+      dataArrayPasseios: [],
+      keyPasseios: [],
+      walkId: ''
     };
   }
+
+  getPasseiosAtribuidos() {
+    axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/getPasseiosAtribuidos', {passeadorKey: firebase.auth().currentUser.uid})
+    .then((response) => {
+      if(response.data != null) {
+        for(x = 0; x < response.data.length; x++) {
+          this.state.dataArrayPasseios[x] = strings('PasseadorPasseiosScreen.dog') + response.data[x].dog.name +
+          '\n' + strings('PasseadorPasseiosScreen.date') + response.data[x].date + ' ' + strings('PasseadorPasseiosScreen.time') +
+          response.data[x].time + '\n' + strings('PasseadorPasseiosScreen.address') + response.data[x].address.street + ', ' +
+          response.data[x].address.num + ', ' + response.data[x].address.area
+          this.state.keyPasseios[x] = response.data[x].key
+        }
+        this.forceUpdate()
+      } else {
+        console.log('Não tem passeios')
+      }
+    }).catch((error) => {Alert.alert(error.message)});
+  }
+
   // required to load native-base font in expo
-  async componentWillMount() {
+  async componentDidMount() {
+    this.getPasseiosAtribuidos()
     await Font.loadAsync({
       Roboto: require("native-base/Fonts/Roboto.ttf"),
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
@@ -66,17 +81,30 @@ class PasseadorPasseiosScreen extends Component {
       </Container>
       );
     } else {
+      if (this.state.clicked == "Iniciar Passeio") {
+        return (
+          <Root>
+            <Container style={{ backgroundColor: 'red' }}>
+              <Content style={{ backgroundColor: 'white', alignContent: "stretch" }}>
+                <Button onPress={this.startSoloWalk(this.state.walkId)} style={{alignSelf: 'center', backgroundColor: 'red'}}>
+                  <Text>{strings('PasseadorPasseiosScreen.startWalk')}</Text>
+                </Button>
+              </Content>
+            </Container>
+          </Root>
+        );
+      } else {
       return (
         <Root>
           <Container style={{backgroundColor:'red'}}>
           <Header style={{backgroundColor:'red', marginTop: 22}}>
-              <Left><Icon name='arrow-back' onPress={() => this.startSoloWalk("gottem")} /></Left>
+              <Left><Icon name='arrow-back' onPress={() => navigate('MenuPasseadorScreen')} /></Left>
               <Body><Title style={{left: -90, color: Colors.snow}}>{strings('PasseadorPasseiosScreen.assignedWalks')}</Title></Body>
               
             </Header>
             <Content padder style={{backgroundColor: 'white'}}>
               <ScrollView>
-                <List dataArray={dataArrayPasseios}
+                <List dataArray={this.state.dataArrayPasseios}
                   renderRow={(item) =>
                     <Card>
                       <CardItem style={{justifyContent: 'space-between'}}>
@@ -90,6 +118,7 @@ class PasseadorPasseiosScreen extends Component {
                               title: strings('PasseadorPasseiosScreen.walk')
                             },
                             buttonIndex => {
+                              this.state.walkId = this.state.keyPasseios[this.state.dataArrayPasseios.indexOf(item)];
                               this.setState({ clicked: BUTTONS[buttonIndex] });
                             }
                           )}
@@ -112,13 +141,11 @@ class PasseadorPasseiosScreen extends Component {
                     <Icon name='md-calendar' style={{color:'white'}}/>
                     <Text style={{color:'white'}}>{strings('Footer.history_button')}</Text>
                   </Button>
-                  <Button vertical onPress={() => navigate('PasseadorPasseiosScreen')}>
-                    <Badge style={{backgroundColor:'black'}}><Text style={{color:'white'}}>2</Text></Badge>
+                  <Button onPress={() => navigate('PasseadorPasseiosScreen')}>
                     <Icon name='md-list-box' type='Ionicons' style={{color:'white'}}/>
                     <Text style={{color:'white'}}>{strings('Footer.assign_button')}</Text>
                   </Button>
-                  <Button vertical onPress={() => navigate('PasseiosLivresScreen')}>
-                  <Badge style={{backgroundColor:'black'}}><Text style={{color:'white'}}>7</Text></Badge>
+                  <Button onPress={() => navigate('PasseiosLivresScreen')}>
                     <Icon name='walk' style={{color:'white'}}/>
                     <Text style={{color:'white'}}>{strings('Footer.available_button')}</Text>
                   </Button>
@@ -129,6 +156,7 @@ class PasseadorPasseiosScreen extends Component {
       )
     }
   }
+}
 }
 
 const mapStateToProps = (state) => {

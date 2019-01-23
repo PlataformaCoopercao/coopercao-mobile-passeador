@@ -40,7 +40,11 @@
     "requestReplace": "Requisitar Substituição",
     "cancelWalk": "Cancelar Passeio",
     "back": "Voltar",
-    "walk": "Passeio"
+    "walk": "Passeio",
+    "dog" : "Cachorro: ",
+    "date": "Data: ",
+    "time": "Horário: ",
+    "address": "Endereço: "
   },
   "LoginScreen": {
     "email": "Email",
@@ -84,7 +88,10 @@
   },
   "PasseiosLivresScreen": {
     "assignWalk": "Atribuir Passeio",
-    "availableTitle": "Passeios Livres"
+    "availableTitle": "Passeios Livres",
+    "dog": "Cachorro: ",
+    "date": "Data: ",
+    "time": "Horário: "
   },
   "HistoricoClienteScreen": {
     "search": "Buscar"
