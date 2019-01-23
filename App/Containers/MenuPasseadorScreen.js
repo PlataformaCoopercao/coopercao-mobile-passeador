@@ -3,7 +3,7 @@ import { Alert } from 'react-native'
 import { connect } from 'react-redux'
 import {
   Container, Header, Title, Content, Body, Text, Icon,
-  Left, Right, Button, List, Footer, FooterTab, Badge, Spinner, Thumbnail, ListItem
+  Left, Right, Button, List, Footer, FooterTab, Spinner, Thumbnail, ListItem
 } from 'native-base'
 import { Font } from "expo"
 import { strings } from '../locales/i18n';

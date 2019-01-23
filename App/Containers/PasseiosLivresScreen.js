@@ -23,7 +23,10 @@ class PasseiosLivresScreen extends Component {
       fontLoading: true, // to load font in expo
       clicked: '',
       edited: '',
-      dataArrayPasseios: []
+      dataArrayPasseios: [],
+      walk: '',
+      walker: '',
+      walks: []
     };
   }
 
@@ -32,6 +35,7 @@ class PasseiosLivresScreen extends Component {
     .then((response) =>{
       if(response.data != null){
         for(x = 0; x < response.data.length; x++){
+          this.state.walks[x] = response.data[x]
           this.state.dataArrayPasseios[x] = 
           'Cachorro: '+ response.data[x].dog.name + 
             '\nData: '+ response.data[x].date + '  Horário: '+ response.data[x].time
@@ -44,9 +48,25 @@ class PasseiosLivresScreen extends Component {
     }).catch((error) => {Alert.alert(error.message)});
   }
 
+  getWalkerData () {
+    axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/getWalker', {uid: firebase.auth().currentUser.uid})
+    .then(response => this.setState({walker: response.data})).catch((error) => {Alert.alert(error.message)});
+    this.forceUpdate()
+  }
+  
+  assingWalk(){
+    console.log(this.state.walker)
+    console.log(this.state.walk)
+    axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/assignWalk', {walk: this.state.walk, walker: firebase.auth().currentUser.uid})
+    .then((response) =>{
+      Alert.alert("Passeio atribuido com sucesso")
+    }).catch((error) => {Alert.alert(error.message)});
+  }
+
   // required to load native-base font in expo
   async componentDidMount() {
     this.getPasseiosLivres()
+    this.getWalkerData()
     await Font.loadAsync({
       Roboto: require("native-base/Fonts/Roboto.ttf"),
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
@@ -82,18 +102,7 @@ class PasseiosLivresScreen extends Component {
                     <Card>
                       <CardItem style={{justifyContent: 'space-between'}}>
                       <Text>{item}</Text>
-                      <Button transparent dark
-                        onPress={() =>
-                          ActionSheet.show(
-                            {
-                              options: BUTTONS,
-                              cancelButtonIndex: CANCEL_INDEX,
-                              title: strings('PasseiosLivresScreen.availableTitle')
-                            },
-                            buttonIndex => {
-                              this.setState({ clicked: BUTTONS[buttonIndex] });
-                            }
-                          )}>
+                      <Button transparent dark onPress={() => {this.state.walk = this.state.walks[this.state.dataArrayPasseios.indexOf(item)], this.assingWalk()}}>
                         <Icon type='Ionicons' name='ios-paw' />
                       </Button>
                       </CardItem>
