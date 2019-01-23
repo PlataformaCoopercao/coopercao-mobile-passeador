@@ -8,17 +8,11 @@
     "rate_button": "Avaliar"
 
   },
-  "FeedbackNota": {
-    "tell": "Conte-nos como se sente",
-    "worried_label": "Preocupado",
-    "sad_label": "Triste",
-    "satisfied_label": "Satisfeito",
-    "happy_label": "Feliz",
-    "surprised_label": "Surpreso"
-  },
   "AvaliacaoScreen": {
     "rate": "Avalie seu passeador",
-    "placeHComments": "Deixe seus comentarios aqui"
+    "placeHComments": "Deixe seus comentarios aqui",
+    "feedbackDog": "Comportamento do cão: ",
+    "confirmFeedback": "Avaliação realizada com sucesso!"
   },
   "Footer": {
     "menu_button": "Menu",
@@ -32,7 +26,10 @@
     "rateWalk": "Avalie o passeio",
     "pee": "Quantas vezes o cachorro fez xixi?",
     "poop": "Quantas vezes o cachorro fez cocô?",
-    "feedback": "Deixe seu feedback"
+    "feedback": "Deixe seu feedback",
+    "feedbackDog": "Comportamento do cão: ",
+    "chooseOne": "Escolha um:",
+    "confirmFeedback": "Avaliação realizada com sucesso!"
   },
   "PasseadorPasseiosScreen": {
     "assignedWalks": "Passeios Atribuídos",
@@ -54,7 +51,14 @@
     "forgotPassword": "Esqueci minha senha"
   },
   "HistoricoPasseadorScreen": {
-    "walkHistory": "Walk History"
+    "walkHistory": "Histórico de Passeios",
+    "noWalks": "Nenhum passeio encontrado!",
+    "date": "Data: ",
+    "time": " Hora: ",
+    "duration": "\nDuração: ",
+    "value": " Valor: ",
+    "dog": "\nCão: ",
+    "street": "\nRua: "
   },
   "CadastroDogScreen": {
     "dogRegister": "Cadastro de Cachorro",

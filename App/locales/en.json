@@ -8,17 +8,11 @@
     "rate_button": "Rate"
 
   },
-  "FeedbackNota": {
-    "tell": "Tell us how you feel",
-    "worried_label": "Worried",
-    "sad_label": "Sad",
-    "satisfied_label": "Satisfied",
-    "happy_label": "Happy",
-    "surprised_label": "Surprised"
-  },
   "AvaliacaoScreen": {
     "rate": "Rate your dogwalker",
-    "placeHComments": "Leave your comments here"
+    "placeHComments": "Leave your comments here",
+    "feedbackDog": "Dog behaviour: ",
+    "confirmFeedback": "Feedback Confirmed!"
   },
   "Footer": {
     "menu_button": "Menu",
@@ -32,7 +26,10 @@
     "rateWalk": "Rate the walk",
     "pee": "How many times did the dog pee?",
     "poop": "How many times did the dog poop?",
-    "feedback": "Leave your feedback"
+    "feedback": "Leave your feedback",
+    "feedbackDog": "Dog behaviour: ",
+    "chooseOne": "Choose One:",
+    "confirmFeedback": "Feedback Confirmed!"
   },
   "PasseadorPasseiosScreen": {
     "assignedWalks": "Assigned Walks",
@@ -54,7 +51,14 @@
     "forgotPassword": "Forgot my password"
   },
   "HistoricoPasseadorScreen": {
-    "walkHistory": "Walk History"
+    "walkHistory": "Walk History",
+    "noWalks": "No walks found!",
+    "date": "Date: ",
+    "time": " Time: ",
+    "duration": "\nDuration: ",
+    "value": " Value: ",
+    "dog": "\nDog: ",
+    "street": "\nStreet: "
   },
   "CadastroDogScreen": {
     "dogRegister": "Dog Registration",

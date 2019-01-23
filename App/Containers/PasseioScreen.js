@@ -7,9 +7,6 @@ import {Container, Header, Title, Content, Body, Text, Icon,
 import { Font, AppLoading, Expo } from "expo"
 import { connect } from 'react-redux'
 import { Colors } from '../Themes/'
-import axios from 'axios';
-import * as firebase from 'firebase';
-import { Alert } from 'react-native';
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
 import { strings } from '../locales/i18n';
@@ -27,7 +24,6 @@ class PasseioScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      walkId: '',
       time: '',
       horaInicio: '',
       horaFinal: '',
@@ -244,7 +240,7 @@ class PasseioScreen extends Component {
                 <Button style={{ alignSelf: 'center', marginTop: 10, marginBottom: 10, backgroundColor:'red' }} onPress={this.showTimeFim}>
                   <Text>{strings('PasseioScreen.finalize')}</Text>
                 </Button>
-                <Button style={{ alignSelf: 'center', marginTop: 10, marginBottom: 10, backgroundColor:'gray' }} onPress={ this.teste() /*() => navigate('FeedbackScreen')*/}>
+                <Button style={{ alignSelf: 'center', marginTop: 10, marginBottom: 10, backgroundColor:'gray' }} onPress={() => navigate('FeedbackScreen')}>
                   <Text>{strings('PasseioScreen.doFeedback')}</Text>
                 </Button>
               </ScrollView>
@@ -259,11 +255,13 @@ class PasseioScreen extends Component {
                     <Icon name='md-calendar' style={{color:'white'}}/>
                     <Text style={{color:'white'}}>{strings('Footer.history_button')}</Text>
                   </Button>
-                  <Button onPress={() => navigate('PasseadorPasseiosScreen')}>
+                  <Button badge vertical onPress={() => navigate('PasseadorPasseiosScreen')}>
+                    <Badge style={{backgroundColor:'black'}}><Text style={{color:'white'}}>2</Text></Badge>
                     <Icon name='md-list-box' type='Ionicons' style={{color:'white'}}/>
                     <Text style={{color:'white'}}>{strings('Footer.assign_button')}</Text>
                   </Button>
-                  <Button onPress={() => navigate('PasseiosLivresScreen')}>
+                  <Button badge vertical onPress={() => navigate('PasseiosLivresScreen')}>
+                  <Badge style={{backgroundColor:'black'}}><Text style={{color:'white'}}>7</Text></Badge>
                     <Icon name='walk' style={{color:'white'}}/>
                     <Text style={{color:'white'}}>{strings('Footer.available_button')}</Text>
                   </Button>
