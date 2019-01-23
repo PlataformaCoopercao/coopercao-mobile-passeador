@@ -26,7 +26,10 @@
     "rateWalk": "Avalie o passeio",
     "pee": "Quantas vezes o cachorro fez xixi?",
     "poop": "Quantas vezes o cachorro fez cocô?",
-    "feedback": "Deixe seu feedback"
+    "feedback": "Deixe seu feedback",
+    "feedbackDog": "Comportamento do cão: ",
+    "chooseOne": "Escolha um:",
+    "confirmFeedback": "Avaliação realizada com sucesso!"
   },
   "PasseadorPasseiosScreen": {
     "assignedWalks": "Passeios Atribuídos",
@@ -44,7 +47,14 @@
     "forgotPassword": "Esqueci minha senha"
   },
   "HistoricoPasseadorScreen": {
-    "walkHistory": "Walk History"
+    "walkHistory": "Histórico de Passeios",
+    "noWalks": "Nenhum passeio encontrado!",
+    "date": "Data: ",
+    "time": " Hora: ",
+    "duration": "\nDuração: ",
+    "value": " Valor: ",
+    "dog": "\nCão: ",
+    "street": "\nRua: "
   },
   "CadastroDogScreen": {
     "dogRegister": "Cadastro de Cachorro",

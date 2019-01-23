@@ -26,7 +26,10 @@
     "rateWalk": "Rate the walk",
     "pee": "How many times did the dog pee?",
     "poop": "How many times did the dog poop?",
-    "feedback": "Leave your feedback"
+    "feedback": "Leave your feedback",
+    "feedbackDog": "Dog behaviour: ",
+    "chooseOne": "Choose One:",
+    "confirmFeedback": "Feedback Confirmed!"
   },
   "PasseadorPasseiosScreen": {
     "assignedWalks": "Assigned Walks",
@@ -44,7 +47,14 @@
     "forgotPassword": "Forgot my password"
   },
   "HistoricoPasseadorScreen": {
-    "walkHistory": "Walk History"
+    "walkHistory": "Walk History",
+    "noWalks": "No walks found!",
+    "date": "Date: ",
+    "time": " Time: ",
+    "duration": "\nDuration: ",
+    "value": " Value: ",
+    "dog": "\nDog: ",
+    "street": "\nStreet: "
   },
   "CadastroDogScreen": {
     "dogRegister": "Dog Registration",

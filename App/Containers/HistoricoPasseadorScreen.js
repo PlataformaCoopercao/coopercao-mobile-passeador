@@ -54,14 +54,12 @@ class HistoricoPasseadorScreen extends Component {
     .then((response) => {
       if(response.data != null){
         for(var x = 0; x < response.data.length; x++){
-            this.state.walkKeys[x] = response.data[x].key;
+            this.state.walkKeys[x] = response.data[x].id;
             this.state.dataArrayPasseios[0][x] = 
             strings("HistoricoPasseadorScreen.date")+ response.data[x].date + strings("HistoricoPasseadorScreen.time")+ response.data[x].time +
             strings("HistoricoPasseadorScreen.duration")+ response.data[x].walk_duration + strings("HistoricoPasseadorScreen.value")+ response.data[x].value +
             strings("HistoricoPasseadorScreen.dog")+ response.data[x].dog.name + strings("HistoricoPasseadorScreen.street")+ response.data[x].address.street;
-            this.state.dataArrayPasseios[1][x] = response.data[x].dog.photoUrl;
-            console.log(response.data[x].date, response.data[x].time, response.data[x].value, response.data[x].dog.name, response.data[x].address.street);
-          
+            this.state.dataArrayPasseios[1][x] = response.data[x].dog.photoUrl;          
         }
         this.forceUpdate();
       }else{
@@ -139,7 +137,7 @@ class HistoricoPasseadorScreen extends Component {
                           <Text style={{}}>{item}</Text>
                         </Body>
                         <Right>
-                          <Button onPress={() => navigate('FeedbackScreen', {walkerKey: this.state.walkKeys[this.state.dataArrayPasseios[0].indexOf(item)],})} trasparent style={{ backgroundColor: 'white', marginTop: 10 }}>
+                          <Button onPress={() => navigate('FeedbackScreen', {walkKey: this.state.walkKeys[this.state.dataArrayPasseios[0].indexOf(item)],})} trasparent style={{ backgroundColor: 'white', marginTop: 10 }}>
                           <Icon name='ios-medal' type='Ionicons' style={{color:'black'}}/>
                         </Button>
                         </Right>
