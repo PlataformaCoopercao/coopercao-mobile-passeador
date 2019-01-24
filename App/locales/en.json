@@ -95,7 +95,8 @@
     "availableTitle": "Available Walks",
     "dog": "Dog: ",
     "date": "Date: ",
-    "time": "Time: "
+    "time": "Time: ",
+    "assignWalkSuccess": "Walk assigned with success!"
   },
   "HistoricoClienteScreen": {
     "search": "Search"

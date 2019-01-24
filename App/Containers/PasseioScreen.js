@@ -192,7 +192,7 @@ class PasseioScreen extends Component {
                 <Button style={{ alignSelf: 'center', marginTop: 10, marginBottom: 10, backgroundColor:'red' }} onPress={this.showTimeFim}>
                   <Text>{strings('PasseioScreen.finalize')}</Text>
                 </Button>
-                <Button style={{ alignSelf: 'center', marginTop: 10, marginBottom: 10, backgroundColor:'gray' }} onPress={() => navigate('FeedbackScreen')}>
+                <Button style={{ alignSelf: 'center', marginTop: 10, marginBottom: 10, backgroundColor:'gray' }} onPress={() => navigate('HistoricoPasseadorScreen')}>
                   <Text>{strings('PasseioScreen.doFeedback')}</Text>
                 </Button>
               </ScrollView>

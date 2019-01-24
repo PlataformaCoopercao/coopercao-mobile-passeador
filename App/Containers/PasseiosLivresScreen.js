@@ -44,7 +44,6 @@ class PasseiosLivresScreen extends Component {
         }
         this.forceUpdate()
       }else{
-        console.log('Não tem passeios')
       }
     }).catch((error) => {Alert.alert(error.message)});
   }
@@ -55,12 +54,10 @@ class PasseiosLivresScreen extends Component {
     this.forceUpdate()
   }
   
-  assingWalk(){
-    console.log(this.state.walker)
-    console.log(this.state.walk)
-    axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/assignWalk', {walk: this.state.walk, walker: firebase.auth().currentUser.uid})
+  assignWalk(){
+    axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/assignWalk', {walk: this.state.walk, walker: firebase.auth().currentUser.id})
     .then((response) =>{
-      Alert.alert("Passeio atribuido com sucesso")
+      Alert.alert(strings("PasseiosLivresScreen.assignWalkSuccess"))
     }).catch((error) => {Alert.alert(error.message)});
   }
 
@@ -103,7 +100,7 @@ class PasseiosLivresScreen extends Component {
                     <Card>
                       <CardItem style={{justifyContent: 'space-between'}}>
                       <Text>{item}</Text>
-                      <Button transparent dark onPress={() => {this.state.walk = this.state.walks[this.state.dataArrayPasseios.indexOf(item)], this.assingWalk()}}>
+                      <Button transparent dark onPress={() => {this.state.walk = this.state.walks[this.state.dataArrayPasseios.indexOf(item)], this.assignWalk()}}>
                         <Icon type='Ionicons' name='ios-paw' />
                       </Button>
                       </CardItem>

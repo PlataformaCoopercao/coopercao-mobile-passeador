@@ -96,7 +96,7 @@ class FeedbackScreen extends Component {
         <Root>
           <Container style={{backgroundColor:'red'}}>
           <Header style={{backgroundColor:'red', marginTop: 22}}>
-              <Left><Icon name='arrow-back' onPress={() => navigate('PasseioScreen')} /></Left>
+              <Left><Icon name='arrow-back' onPress={() => navigate('HistoricoPasseadorScreen')} /></Left>
               <Body><Title style={{color: Colors.snow}}>{strings('FeedbackScreen.rateWalk')}</Title></Body>
               <Right/>
             </Header>

@@ -95,7 +95,8 @@
     "availableTitle": "Passeios Livres",
     "dog": "Cachorro: ",
     "date": "Data: ",
-    "time": "Horário: "
+    "time": "Horário: ",
+    "assignWalkSuccess": "Passeio atribuído com sucesso!"
   },
   "HistoricoClienteScreen": {
     "search": "Buscar"
