@@ -29,7 +29,7 @@ class PasseadorPasseiosScreen extends Component {
       edited: '',
       uid: '',
       dataArrayPasseios: [],
-      keyPasseios: [],
+      idPasseios: [],
       walkId: ''
     };
   }
@@ -43,7 +43,7 @@ class PasseadorPasseiosScreen extends Component {
           '\n' + strings('PasseadorPasseiosScreen.date') + response.data[x].date + ' ' + strings('PasseadorPasseiosScreen.time') +
           response.data[x].time + '\n' + strings('PasseadorPasseiosScreen.address') + response.data[x].address.street + ', ' +
           response.data[x].address.num + ', ' + response.data[x].address.area
-          this.state.keyPasseios[x] = response.data[x].key
+          this.state.idPasseios[x] = response.data[x].id
         }
         this.forceUpdate()
       } else {
@@ -95,11 +95,26 @@ class PasseadorPasseiosScreen extends Component {
                   renderRow={(item) =>
                     <Card>
                       <CardItem style={{justifyContent: 'space-between'}}>
-                      <Text>{item}</Text>
                       {<Button transparent dark
-                        onPress={() => this.startSoloWalk(this.state.keyPasseios[this.state.dataArrayPasseios.indexOf(item)])}>
+                        onPress={() =>
+                          ActionSheet.show(
+                            {
+                              options: BUTTONS,
+                              cancelButtonIndex: CANCEL_INDEX,
+                              title: strings('PasseadorPasseiosScreen.walk')
+                            },
+                            buttonIndex => {
+                              this.state.walkId = this.state.idPasseios[this.state.dataArrayPasseios.indexOf(item)];
+                              this.setState({ clicked: BUTTONS[buttonIndex] });
+                              if(this.state.clicked == 'Iniciar Passeio') {
+                                this.startSoloWalk(this.state.walkId)
+                              }
+                            }
+                          )}
+                      >
                         <Icon type='Ionicons' name='ios-paw' />
                       </Button>}
+                      <Text>{item}</Text>
                       </CardItem>
                     </Card>
                   }>
@@ -144,23 +159,3 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PasseadorPasseiosScreen)
-
-/*
-{<Button transparent dark
-  onPress={() =>
-    ActionSheet.show(
-      {
-        options: BUTTONS,
-        cancelButtonIndex: CANCEL_INDEX,
-        title: strings('PasseadorPasseiosScreen.walk')
-      },
-      buttonIndex => {
-        this.state.walkId = this.state.keyPasseios[this.state.dataArrayPasseios.indexOf(item)];
-        this.setState({ clicked: BUTTONS[buttonIndex] });
-      }
-    )}
->
-  onPress={() => this.startSoloWalk(this.state.keyPasseios[this.state.dataArrayPasseios.indexOf(item)])}>
-  <Icon type='Ionicons' name='ios-paw' />
-</Button>}
-*/

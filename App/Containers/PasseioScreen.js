@@ -16,6 +16,7 @@ class PasseioScreen extends Component {
     super(props);
     this.state = {
       fontLoading: true, // to load font in expo
+      walkId: this.props.navigation.state.params.walkId,
       latitude: -8.137636,
       longitude: -34.907432,
     };
