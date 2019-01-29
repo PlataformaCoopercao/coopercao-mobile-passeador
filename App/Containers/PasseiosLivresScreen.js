@@ -26,11 +26,13 @@ class PasseiosLivresScreen extends Component {
       dataArrayPasseios: [],
       walk: '',
       walker: '',
-      walks: []
+      walks: [],
+      loaded: false
     };
   }
 
   getUnassignedWalks(){
+    this.setState({loaded:false});
     axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/getUnassignedWalks')
     .then((response) =>{
       if(response.data != null){
@@ -42,6 +44,7 @@ class PasseiosLivresScreen extends Component {
             strings('PasseiosLivresScreen.time') + response.data[x].time
           
         }
+        this.setState({loaded:true});
         this.forceUpdate()
       }else{
       }
@@ -76,9 +79,9 @@ class PasseiosLivresScreen extends Component {
 
   render() {
     const {navigate} = this.props.navigation;
-    if (this.state.fontLoading) {
+    if (!this.state.loaded) {
       return (
-        <Container style={{backgroundColor:'red'}}>
+        <Container style={{backgroundColor:'white'}}>
           <Header style={{backgroundColor:'red', marginTop: 25}}/>
         <Content>
           <Spinner color='red' />

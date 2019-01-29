@@ -30,11 +30,13 @@ class PasseadorPasseiosScreen extends Component {
       uid: '',
       dataArrayPasseios: [],
       idPasseios: [],
-      walkId: ''
+      walkId: '',
+      loaded: false
     };
   }
 
   getAssignedWalks() {
+    this.setState({loaded:false});
     axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/getAssignedWalks', {walker_id: firebase.auth().currentUser.uid})
     .then((response) => {
       if(response.data != null) {
@@ -45,6 +47,7 @@ class PasseadorPasseiosScreen extends Component {
           response.data[x].address.num + ', ' + response.data[x].address.area
           this.state.idPasseios[x] = response.data[x].id
         }
+        this.setState({loaded:true});
         this.forceUpdate()
       } else {
         console.log('Não tem passeios')
@@ -71,9 +74,9 @@ class PasseadorPasseiosScreen extends Component {
 
   render() {
     const {navigate} = this.props.navigation;
-    if (this.state.fontLoading) {
+    if (!this.state.loaded) {
       return (
-        <Container style={{backgroundColor:'red'}}>
+        <Container style={{backgroundColor:'white'}}>
           <Header style={{backgroundColor:'red', marginTop: 22}}/>
         <Content>
           <Spinner color='red' />
