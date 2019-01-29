@@ -151,25 +151,25 @@ class HistoricoPasseadorScreen extends Component {
               </ScrollView>
             </Content>
             <Footer style={{ backgroundColor: 'red' }}>
-            <FooterTab style={{ backgroundColor: 'red' }}>
-            <Button onPress={() => navigate('MenuPasseadorScreen')}>
-              <Icon name='md-person' type='Ionicons' style={{color:'white'}}/>
-              <Text style={{ color: 'white' }}>{strings('Footer.menu_button')}</Text>
-              </Button>
-              <Button onPress={() => navigate('HistoricoPasseadorScreen')}>
-                <Icon name='md-calendar' style={{ color: 'white' }} />
-                <Text style={{ color: 'white' }}>{strings('Footer.history_button')}</Text>
-              </Button>
-              <Button onPress={() => navigate('ExtratoScreen')}>
-                <Icon name='ios-paper' style={{ color: 'white' }} />
-                <Text style={{ color: 'white' }}>{strings('Footer.extract_button')}</Text>
-              </Button>
-              <Button onPress={() => navigate('PasseiosPasseadorScreen')}>
-                <Icon name='walk' style={{ color: 'white' }} />
-                <Text style={{ color: 'white' }}>{strings('Footer.walks_button')}</Text>
-              </Button>
-            </FooterTab>
-          </Footer>
+                <FooterTab style={{backgroundColor:'red'}}>
+                  <Button onPress={() => navigate('MenuPasseadorScreen')}>
+                    <Icon name='md-person' type='Ionicons' style={{color:'white'}}/>
+                    <Text style={{color:'white'}}>{strings('Footer.menu_button')}</Text>
+                  </Button>
+                  <Button onPress={() => navigate('HistoricoPasseadorScreen')}>
+                    <Icon name='md-calendar' style={{color:'white'}}/>
+                    <Text style={{color:'white'}}>{strings('Footer.history_button')}</Text>
+                  </Button>
+                  <Button onPress={() => navigate('PasseadorPasseiosScreen')}>
+                    <Icon name='md-list-box' type='Ionicons' style={{color:'white'}}/>
+                    <Text style={{color:'white'}}>{strings('Footer.assign_button')}</Text>
+                  </Button>
+                  <Button onPress={() => navigate('PasseiosLivresScreen')}>
+                    <Icon name='walk' style={{color:'white'}}/>
+                    <Text style={{color:'white'}}>{strings('Footer.available_button')}</Text>
+                  </Button>
+                </FooterTab>
+              </Footer>
           </Container>
         </Root>
 
