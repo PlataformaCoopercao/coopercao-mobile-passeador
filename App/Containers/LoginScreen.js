@@ -77,7 +77,7 @@ class LoginScreen extends Component {
     } else {
     return (
         <Container>
-          <Header style={{ backgroundColor: 'white', marginTop: 22}}>
+          <Header style={{ backgroundColor: 'white', marginTop: 24}}>
           <Left>
       <Button onPress={() => this.setLocalePT()} style={{ backgroundColor:'red' }}>
       <Text>{'PT'}</Text>

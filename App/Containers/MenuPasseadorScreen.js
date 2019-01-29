@@ -60,7 +60,7 @@ class MenuPasseadorScreen extends Component {
     if (!this.state.loaded) {
       return (
         <Container>
-          <Header />
+          <Header style={{ backgroundColor: 'red', marginTop: 24 }}/>
           <Content>
             <Spinner color='red' />
           </Content>
@@ -69,7 +69,7 @@ class MenuPasseadorScreen extends Component {
     } else {
       return (
         <Container style={{ backgroundColor: 'white' }}>
-          <Header style={{ backgroundColor: 'red', marginTop: 25 }}>
+          <Header style={{ backgroundColor: 'red', marginTop: 24 }}>
             <Left>
             </Left>
             <Body>

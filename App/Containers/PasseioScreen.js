@@ -16,16 +16,140 @@ class PasseioScreen extends Component {
       walkId: this.props.navigation.state.params.walkId,
       latitude: -8.137636,
       longitude: -34.907432,
-      loaded: false
+      loaded: false,
+      time: '',
+      horaInicio: '',
+      horaFinal: '',
+      btnIniciar: true,
+      clicked: '',
+      edited: '',
+      walkState: {},
+      walker: {},
+      dateInicio: new Date(),
+      dateFim: new Date()
     };
   }
-  async componentDidMount() {
+
+  async componentWillMount() {
+    await this.loadWalk();
+    await this.loadWalker();
     await Font.loadAsync({
       Roboto: require("native-base/Fonts/Roboto.ttf"),
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
       Ionicons: require("@expo/vector-icons/fonts/Ionicons.ttf")
     });
     this.setState({ fontLoading: false });
+  }
+
+  async loadWalk(){
+    var url = 'https://us-central1-coopercao-backend.cloudfunctions.net/getPasseiosAtribuidos';
+    await axios.post(url, { passeadorKey: firebase.auth().currentUser.uid })
+      .then((response) => {
+        var resposta = {};
+        var walkId = this.state.walkId;     //ignorar nome da variavel
+        for (i = 0; i < response.data.length; i++) {
+          var pls = response.data[i].id;    //ignorar nome da variavel
+          if(pls == walkId ){
+            //console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            //console.log(pls);
+            //console.log(cursed);
+            resposta = response.data[i];
+            this.state.walkState = resposta;
+          }
+        }
+        endereco = resposta.address.street + ", Num: " + resposta.address.num +"\n" 
+        + resposta.address.district + "\n" + resposta.address.compl;
+      })
+      .catch((error) => {
+        console.warn(error.message);
+      });
+  }
+
+  loadWalker(){
+    var url = 'https://us-central1-coopercao-backend.cloudfunctions.net/getWalker'
+    axios.post(url, { uid: firebase.auth().currentUser.uid })
+      .then((response) => {
+        this.state.walker = response.data
+      })
+      .catch((error) => {
+        console.warn(error.message);
+      });
+  }
+
+  getTime() {
+    var date, TimeType, hour, minutes, seconds, fullTime;
+    date = new Date();
+    hour = date.getHours();
+    if (hour <= 11) {
+      TimeType = 'AM';
+    }
+    else {
+      TimeType = 'PM';
+    }
+    if (hour > 12) {
+      hour = hour - 12;
+    }
+    if (hour == 0) {
+      hour = 12;
+    }
+    minutes = date.getMinutes();
+    if (minutes < 10) {
+      minutes = '0' + minutes.toString();
+    }
+    seconds = date.getSeconds();
+    if (seconds < 10) {
+      seconds = '0' + seconds.toString();
+    }
+
+    fullTime = hour.toString() + ':' + minutes.toString() + ':' + seconds.toString() + ' ' + TimeType.toString();
+
+    this.setState({
+      time: fullTime
+    });
+  }
+
+  componentDidMount() {
+    this.Clock = setInterval( () => this.getTime(), 1000 );
+    
+    this.state.walkId = this.props.navigation.getParam('walkId', '0');
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.Clock);
+  }
+
+  showTimeInicio = () => {
+    this.setState({
+      btnColor: '#C1C1C1',
+      horaInicio: this.state.time.toString(),
+      btnIniciar: !this.state.btnIniciar
+    });
+    this.state.dateInicio = new Date();
+  }
+  showTimeFim = () => {
+    this.setState({
+      horaFinal: this.state.time.toString()
+    });
+    this.state.dateFim = new Date();
+    diffMs = (this.state.dateFim - this.state.dateInicio);
+    diffHrs = Math.floor((diffMs % 86400000) / 3600000);
+    diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000);
+    diferenca = diffHrs+":"+diffMins;
+  }
+
+  sendWalk = () => {
+    var url = 'https://us-central1-coopercao-backend.cloudfunctions.net/endWalk';
+    let submit = {}
+    submit.walk = this.state.walkState,
+    submit.walk_duration = diferenca,
+    submit.route = "TODO";
+    axios.post(url, submit)
+      .then((response) => {
+        this.props.navigation.navigate('MenuPasseadorScreen');
+      })
+      .catch((error) => {
+        console.warn(error.message);
+      });
   }
 
   render() {
@@ -60,13 +184,20 @@ class PasseioScreen extends Component {
         </MapView>
         <Content style={styles.placesContainer}>
           <Content style={styles.place}>
+            <Label> {strings('PasseioScreen.start')}: </Label>
+              <Text style={{justifyContent:'center'}}>{this.state.horaInicio}</Text>
+              <Right><Label> {strings('PasseioScreen.end')}: </Label></Right>
+              <Text style={{justifyContent:'center'}}>{this.state.horaFinal}</Text>
             <List>
               <ListItem>
-                <Button style={styles.buttonStart}>
+                <Button style={styles.button} onPress={this.showTimeInicio} disabled={!this.state.btnIniciar}>
                 <Text>{strings('PasseioScreen.begin')}</Text>
                 </Button>
-                <Button style={styles.buttonEnd}>
+                <Button style={styles.button} onPress={this.showTimeFim}>
                 <Text>{strings('PasseioScreen.finalize')}</Text>
+                </Button>
+                <Button style={styles.button} onPress={this.sendWalk}>
+                <Text>{strings('PasseioScreen.send')}</Text>
                 </Button>
               </ListItem>
             </List>
@@ -109,19 +240,12 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 
-  buttonStart:{
+  button:{
     backgroundColor: "red",
     borderRadius: 10,
-    alignSelf: 'flex-start',
-    marginRight:30
+    marginHorizontal:10
   },
 
-  buttonEnd:{
-    backgroundColor: "red",
-    borderRadius: 10,
-    alignSelf: 'flex-end',
-    marginLeft:30
-  },
 });
 
 const mapStateToProps = (state) => {

@@ -111,7 +111,7 @@ class HistoricoPasseadorScreen extends Component {
     if (!this.state.loaded) {
       return (
         <Container>
-          <Header />
+          <Header style={{ backgroundColor: 'red', marginTop: 24}}/>
           <Content>
             <Spinner color='red' />
           </Content>
