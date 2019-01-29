@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
-import { ScrollView, View, StyleSheet, Dimensions } from 'react-native';
-import {Container, Header, Title, Content, Body, Text, Icon,
-  Left, Right, Root, Button, Card, List, ListItem,
-   CardItem, Footer, FooterTab, Badge, Spinner, Label, Thumbnail
+import { StyleSheet, Dimensions } from 'react-native';
+import {Container, Header, Content, Text, Button, List, ListItem, Spinner
 } from 'native-base'
-import { Font, AppLoading, Expo } from "expo"
+import { Font } from "expo"
 import { connect } from 'react-redux'
-import { Colors } from '../Themes/'
 import { strings } from '../locales/i18n';
 import MapView from 'react-native-maps';
 
@@ -65,10 +62,10 @@ class PasseioScreen extends Component {
             <List>
               <ListItem>
                 <Button style={styles.buttonStart}>
-                <Text>Iniciar</Text>
+                <Text>{strings('PasseioScreen.begin')}</Text>
                 </Button>
                 <Button style={styles.buttonEnd}>
-                <Text>Finalizar</Text>
+                <Text>{strings('PasseioScreen.finalize')}</Text>
                 </Button>
               </ListItem>
             </List>
