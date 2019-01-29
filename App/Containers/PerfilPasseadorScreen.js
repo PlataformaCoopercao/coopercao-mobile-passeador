@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Alert} from 'react-native'
+import { Alert } from 'react-native'
 import { connect } from 'react-redux'
 import {
   Container, Header, Title, Content, Body, Text, Icon,
@@ -16,7 +16,7 @@ import styles from './Styles/PerfilPasseadorScreenStyle.js';
 import axios from 'axios';
 import * as firebase from 'firebase';
 
-class  PerfilPasseadorScreen extends Component {
+class PerfilPasseadorScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,19 +35,32 @@ class  PerfilPasseadorScreen extends Component {
     };
   }
 
-  getWalkerData () {
-    this.setState({loaded:false});
-    this.getUnassignedWalks()
-    axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/getWalker', {id: firebase.auth().currentUser.uid})
-    .then(response => this.setState({nome: response.data.name, uri: response.data.photoURL, email: response.data.email,
-      endereco: response.data.address.street, telefone: response.data.phoneNumber, cpf: response.data.cpf, estadoCivil: response.data.civilState,
-      profissao: response.data.profession, bairros: response.data.areas, nota: response.data.score, loaded:true})).catch((error) => {Alert.alert(error.message)});
-    this.update()
+  getWalkerData() {
+    axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/getWalker',
+      { id: firebase.auth().currentUser.uid })
+      .then((response) => {
+        this.setState({
+          nome: response.data.name,
+          uri: response.data.photoURL,
+          email: response.data.email,
+          endereco: response.data.address.street,
+          telefone: response.data.phoneNumber,
+          cpf: response.data.cpf,
+          estadoCivil: response.data.civilState,
+          profissao: response.data.profession,
+          bairros: response.data.areas,
+          nota: response.data.score,
+          loaded: true
+        })
+      })
+      .catch((error) => {
+        Alert.alert(error.message);
+      });
   }
 
-  update () {
-    if(this.state.uri == null || this.state.uri == ''){
-      this.setState({uri: 'https://t4.ftcdn.net/jpg/02/15/84/43/240_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg'})
+  update() {
+    if (this.state.uri == null || this.state.uri == '') {
+      this.setState({ uri: 'https://t4.ftcdn.net/jpg/02/15/84/43/240_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg' })
     }
     this.forceUpdate()
   }
@@ -59,17 +72,18 @@ class  PerfilPasseadorScreen extends Component {
   }
   // required to load native-base font in expo
   async componentDidMount() {
-    this.getWalkerData();
+    await this.getWalkerData();
     await Font.loadAsync({
       Roboto: require("native-base/Fonts/Roboto.ttf"),
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
       Ionicons: require("@expo/vector-icons/fonts/Ionicons.ttf")
     });
-    this.setState({ fontLoading: false });
+    //this.setState({ fontLoading: false });
+    //this.setState({loaded: true});
   }
 
   render() {
-    const {navigate} = this.props.navigation;
+    const { navigate } = this.props.navigation;
     if (!this.state.loaded) {
       return (
         <Container>
@@ -84,10 +98,10 @@ class  PerfilPasseadorScreen extends Component {
         <Container style={{ backgroundColor: 'white' }}>
           <Header style={{ backgroundColor: 'red', marginTop: 25 }}>
             <Left>
-              <Icon name='arrow-back' style={{ marginHorizontal: 10}} onPress={() => navigate('MenuPasseadorScreen')} />
+              <Icon name='arrow-back' style={{ marginHorizontal: 10 }} onPress={() => navigate('MenuPasseadorScreen')} />
             </Left>
             <Body>
-              <Title style={{ marginHorizontal: 10, color: Colors.snow, alignSelf: "auto"}}>{strings('PerfilPasseadorScreen.profile')}</Title>
+              <Title style={{ marginHorizontal: 10, color: Colors.snow, alignSelf: "auto" }}>{strings('PerfilPasseadorScreen.profile')}</Title>
             </Body>
           </Header>
           <Content padder style={{ backgroundColor: 'white', alignContent: "stretch" }}>
@@ -139,22 +153,22 @@ class  PerfilPasseadorScreen extends Component {
           </Content>
           <Footer style={{ backgroundColor: 'red' }}>
             <FooterTab style={{ backgroundColor: 'red' }}>
-                  <Button onPress={() => navigate('MenuPasseadorScreen')}>
-                    <Icon name='md-person' type='Ionicons' style={{color:'white'}}/>
-                    <Text style={{color:'white'}}>{strings('Footer.menu_button')}</Text>
-                  </Button>
-                  <Button onPress={() => navigate('HistoricoPasseadorScreen')}>
-                    <Icon name='md-calendar' style={{color:'white'}}/>
-                    <Text style={{color:'white'}}>{strings('Footer.history_button')}</Text>
-                  </Button>
-                  <Button onPress={() => navigate('PasseadorPasseiosScreen')}>
-                    <Icon name='md-list-box' type='Ionicons' style={{color:'white'}}/>
-                    <Text style={{color:'white'}}>{strings('Footer.assign_button')}</Text>
-                  </Button>
-                  <Button onPress={() => navigate('PasseiosLivresScreen')}>
-                    <Icon name='walk' style={{color:'white'}}/>
-                    <Text style={{color:'white'}}>{strings('Footer.available_button')}</Text>
-                  </Button>
+              <Button onPress={() => navigate('MenuPasseadorScreen')}>
+                <Icon name='md-person' type='Ionicons' style={{ color: 'white' }} />
+                <Text style={{ color: 'white' }}>{strings('Footer.menu_button')}</Text>
+              </Button>
+              <Button onPress={() => navigate('HistoricoPasseadorScreen')}>
+                <Icon name='md-calendar' style={{ color: 'white' }} />
+                <Text style={{ color: 'white' }}>{strings('Footer.history_button')}</Text>
+              </Button>
+              <Button onPress={() => navigate('PasseadorPasseiosScreen')}>
+                <Icon name='md-list-box' type='Ionicons' style={{ color: 'white' }} />
+                <Text style={{ color: 'white' }}>{strings('Footer.assign_button')}</Text>
+              </Button>
+              <Button onPress={() => navigate('PasseiosLivresScreen')}>
+                <Icon name='walk' style={{ color: 'white' }} />
+                <Text style={{ color: 'white' }}>{strings('Footer.available_button')}</Text>
+              </Button>
             </FooterTab>
           </Footer>
         </Container>

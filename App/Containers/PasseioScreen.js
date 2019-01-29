@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import { StyleSheet, Dimensions } from 'react-native';
-import {Container, Header, Content, Text, Button, List, ListItem, Spinner
+import {
+  Container, Header, Content, Text, Button, List, ListItem, Spinner, Label, Left, Right
 } from 'native-base'
 import { Font } from "expo"
 import { connect } from 'react-redux'
 import { strings } from '../locales/i18n';
 import MapView from 'react-native-maps';
+import * as firebase from 'firebase';
+import { Alert } from 'react-native'
+import axios from 'axios';
 
 
 class PasseioScreen extends Component {
@@ -30,26 +34,18 @@ class PasseioScreen extends Component {
     };
   }
 
-  async componentWillMount() {
-    await this.loadWalk();
-    await this.loadWalker();
-    await Font.loadAsync({
-      Roboto: require("native-base/Fonts/Roboto.ttf"),
-      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
-      Ionicons: require("@expo/vector-icons/fonts/Ionicons.ttf")
-    });
-    this.setState({ fontLoading: false });
-  }
-
-  async loadWalk(){
-    var url = 'https://us-central1-coopercao-backend.cloudfunctions.net/getPasseiosAtribuidos';
-    await axios.post(url, { passeadorKey: firebase.auth().currentUser.uid })
+  loadWalk() {
+    //console.log("começa load Walk");
+    //console.log(firebase.auth().currentUser.uid);
+    var url = 'https://us-central1-coopercao-backend.cloudfunctions.net/getAssignedWalks';
+    axios.post(url, { walker_id: firebase.auth().currentUser.uid })
       .then((response) => {
+        //console.log(response);
         var resposta = {};
         var walkId = this.state.walkId;     //ignorar nome da variavel
         for (i = 0; i < response.data.length; i++) {
           var pls = response.data[i].id;    //ignorar nome da variavel
-          if(pls == walkId ){
+          if (pls == walkId) {
             //console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             //console.log(pls);
             //console.log(cursed);
@@ -57,22 +53,29 @@ class PasseioScreen extends Component {
             this.state.walkState = resposta;
           }
         }
-        endereco = resposta.address.street + ", Num: " + resposta.address.num +"\n" 
-        + resposta.address.district + "\n" + resposta.address.compl;
+        endereco = resposta.address.street + ", Num: " + resposta.address.num + "\n"
+          + resposta.address.area + "\n" + resposta.address.compl;
+        console.log("termina loadWalk");
       })
       .catch((error) => {
         console.warn(error.message);
+        Alert.alert("Walk Error")
+        this.props.navigation.navigate('MenuPasseadorScreen');
       });
   }
 
-  loadWalker(){
+  loadWalker() {
     var url = 'https://us-central1-coopercao-backend.cloudfunctions.net/getWalker'
-    axios.post(url, { uid: firebase.auth().currentUser.uid })
+    axios.post(url, { id: firebase.auth().currentUser.uid })
       .then((response) => {
         this.state.walker = response.data
+        this.setState({ loaded: true });
+        //console.log("BBBBBBBBBBBB");
       })
       .catch((error) => {
         console.warn(error.message);
+        Alert.alert("Walker Error");
+        this.props.navigation.navigate('MenuPasseadorScreen');
       });
   }
 
@@ -108,13 +111,21 @@ class PasseioScreen extends Component {
     });
   }
 
-  componentDidMount() {
-    this.Clock = setInterval( () => this.getTime(), 1000 );
-    
+  async componentDidMount() {
+    this.Clock = setInterval(() => this.getTime(), 1000);
     this.state.walkId = this.props.navigation.getParam('walkId', '0');
+
+    await this.loadWalk();
+    await this.loadWalker();
+    await Font.loadAsync({
+      Roboto: require("native-base/Fonts/Roboto.ttf"),
+      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
+      Ionicons: require("@expo/vector-icons/fonts/Ionicons.ttf")
+    });
+    this.setState({ fontLoading: false });
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     clearInterval(this.Clock);
   }
 
@@ -134,15 +145,15 @@ class PasseioScreen extends Component {
     diffMs = (this.state.dateFim - this.state.dateInicio);
     diffHrs = Math.floor((diffMs % 86400000) / 3600000);
     diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000);
-    diferenca = diffHrs+":"+diffMins;
+    diferenca = diffHrs + ":" + diffMins;
   }
 
   sendWalk = () => {
     var url = 'https://us-central1-coopercao-backend.cloudfunctions.net/endWalk';
     let submit = {}
     submit.walk = this.state.walkState,
-    submit.walk_duration = diferenca,
-    submit.route = "TODO";
+      submit.walk_duration = diferenca,
+      submit.route = "TODO";
     axios.post(url, submit)
       .then((response) => {
         this.props.navigation.navigate('MenuPasseadorScreen');
@@ -153,60 +164,60 @@ class PasseioScreen extends Component {
   }
 
   render() {
-    const {navigate} = this.props.navigation;
-    const {latitude, longitude} = this.state;
-    if (this.state.fontLoading) {
+    const { navigate } = this.props.navigation;
+    const { latitude, longitude } = this.state;
+    if (!this.state.loaded) {
       return (
-        <Container style={{backgroundColor:'white'}}>
-          <Header style={{backgroundColor:'red', marginTop: 24}}/>
-        <Content>
-          <Spinner color='red' />
-        </Content>
-      </Container>
+        <Container style={{ backgroundColor: 'white' }}>
+          <Header style={{ backgroundColor: 'red', marginTop: 24 }} />
+          <Content>
+            <Spinner color='red' />
+          </Content>
+        </Container>
       );
     } else {
-    return (
-      <Container style={styles.container}>
-        <MapView
-          initialRegion={{
-            latitude,
-            longitude,
-            latitudeDelta: 0.0130,
-            longitudeDelta: 0.0130,
-          }}
-          style={styles.mapView}
-          rotateEnabled={false}
-          scrollEnabled={false}
-          zoomEnabled={false}
-          showsPointsOfInterest={false}
-          showBuildings={false}
-        >
-        </MapView>
-        <Content style={styles.placesContainer}>
-          <Content style={styles.place}>
-            <Label> {strings('PasseioScreen.start')}: </Label>
-              <Text style={{justifyContent:'center'}}>{this.state.horaInicio}</Text>
+      return (
+        <Container style={styles.container}>
+          <MapView
+            initialRegion={{
+              latitude,
+              longitude,
+              latitudeDelta: 0.0130,
+              longitudeDelta: 0.0130,
+            }}
+            style={styles.mapView}
+            rotateEnabled={false}
+            scrollEnabled={false}
+            zoomEnabled={false}
+            showsPointsOfInterest={false}
+            showBuildings={false}
+          >
+          </MapView>
+          <Content style={styles.placesContainer}>
+            <Content style={styles.place}>
+              <Label> {strings('PasseioScreen.start')}: </Label>
+              <Text style={{ justifyContent: 'center' }}>{this.state.horaInicio}</Text>
               <Right><Label> {strings('PasseioScreen.end')}: </Label></Right>
-              <Text style={{justifyContent:'center'}}>{this.state.horaFinal}</Text>
-            <List>
-              <ListItem>
-                <Button style={styles.button} onPress={this.showTimeInicio} disabled={!this.state.btnIniciar}>
-                <Text>{strings('PasseioScreen.begin')}</Text>
-                </Button>
-                <Button style={styles.button} onPress={this.showTimeFim}>
-                <Text>{strings('PasseioScreen.finalize')}</Text>
-                </Button>
-                <Button style={styles.button} onPress={this.sendWalk}>
-                <Text>{strings('PasseioScreen.send')}</Text>
-                </Button>
-              </ListItem>
-            </List>
+              <Text style={{ justifyContent: 'center' }}>{this.state.horaFinal}</Text>
+              <List>
+                <ListItem>
+                  <Button style={styles.button} onPress={this.showTimeInicio} disabled={!this.state.btnIniciar}>
+                    <Text>{strings('PasseioScreen.begin')}</Text>
+                  </Button>
+                  <Button style={styles.button} onPress={this.showTimeFim}>
+                    <Text>{strings('PasseioScreen.finalize')}</Text>
+                  </Button>
+                  <Button style={styles.button} onPress={this.sendWalk}>
+                    <Text>{strings('PasseioScreen.send')}</Text>
+                  </Button>
+                </ListItem>
+              </List>
+            </Content>
           </Content>
-        </Content>
-      </Container>
-    )
+        </Container>
+      )
+    }
   }
-}
 }
 
 const { height, width } = Dimensions.get('window');
@@ -226,7 +237,7 @@ const styles = StyleSheet.create({
     right: 0,
   },
 
-  placesContainer:{
+  placesContainer: {
     width: '100%',
     maxHeight: 160,
   },
@@ -240,10 +251,10 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 
-  button:{
+  button: {
     backgroundColor: "red",
     borderRadius: 10,
-    marginHorizontal:10
+    marginHorizontal: 10
   },
 
 });
