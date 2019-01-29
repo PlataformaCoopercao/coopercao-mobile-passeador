@@ -30,15 +30,18 @@ class  PerfilPasseadorScreen extends Component {
       profissao: '',
       telefone: '',
       nota: '',
-      uri: 'https://t4.ftcdn.net/jpg/02/15/84/43/240_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg'
+      uri: 'https://t4.ftcdn.net/jpg/02/15/84/43/240_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg',
+      loaded: false
     };
   }
 
   getWalkerData () {
+    this.setState({loaded:false});
+    this.getUnassignedWalks()
     axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/getWalker', {id: firebase.auth().currentUser.uid})
     .then(response => this.setState({nome: response.data.name, uri: response.data.photoURL, email: response.data.email,
       endereco: response.data.address.street, telefone: response.data.phoneNumber, cpf: response.data.cpf, estadoCivil: response.data.civilState,
-      profissao: response.data.profession, bairros: response.data.areas, nota: response.data.score})).catch((error) => {Alert.alert(error.message)});
+      profissao: response.data.profession, bairros: response.data.areas, nota: response.data.score, loaded:true})).catch((error) => {Alert.alert(error.message)});
     this.update()
   }
 
@@ -67,7 +70,7 @@ class  PerfilPasseadorScreen extends Component {
 
   render() {
     const {navigate} = this.props.navigation;
-    if (this.state.fontLoading) {
+    if (!this.state.loaded) {
       return (
         <Container>
           <Header />
@@ -78,7 +81,7 @@ class  PerfilPasseadorScreen extends Component {
       );
     } else {
       return (
-        <Container style={{ backgroundColor: 'red' }}>
+        <Container style={{ backgroundColor: 'white' }}>
           <Header style={{ backgroundColor: 'red', marginTop: 25 }}>
             <Left>
               <Icon name='arrow-back' style={{ marginHorizontal: 10}} onPress={() => navigate('MenuPasseadorScreen')} />

@@ -45,11 +45,13 @@ class HistoricoPasseadorScreen extends Component {
       isVisible: false,
       dataArrayPasseios: [[], []],
       walkKeys: [],
-      remount: 1
+      remount: 1,
+      loaded: false
     };
   }
 
   getHistoricoPasseios(){
+    this.setState({loaded:false});
     axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/getWalkerHistory', {walker_id: firebase.auth().currentUser.uid})
     .then((response) => {
       if(response.data != null){
@@ -61,6 +63,7 @@ class HistoricoPasseadorScreen extends Component {
             strings("HistoricoPasseadorScreen.dog")+ response.data[x].dog.name + strings("HistoricoPasseadorScreen.street")+ response.data[x].address.street;
             this.state.dataArrayPasseios[1][x] = response.data[x].dog.photoUrl;          
         }
+        this.setState({loaded:true});
         this.forceUpdate();
       }else{
         Alert.alert(strings("HistoricoPasseadorScreen.noWalks"));
@@ -105,7 +108,7 @@ class HistoricoPasseadorScreen extends Component {
   
   render() {
     const { navigate } = this.props.navigation;
-    if (this.state.fontLoading) {
+    if (!this.state.loaded) {
       return (
         <Container>
           <Header />
@@ -117,7 +120,7 @@ class HistoricoPasseadorScreen extends Component {
     } else {
       return (
         <Root>
-          <Container style={{ backgroundColor: 'red' }}>
+          <Container style={{ backgroundColor: 'white' }}>
             <Header style={{ backgroundColor: 'red', marginTop: 25}}>
               <Left>
                 <Icon name='arrow-back' style={{ marginHorizontal: 10}} onPress={() => navigate('MenuPasseadorScreen')} />

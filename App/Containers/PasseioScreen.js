@@ -16,6 +16,7 @@ class PasseioScreen extends Component {
       walkId: this.props.navigation.state.params.walkId,
       latitude: -8.137636,
       longitude: -34.907432,
+      loaded: false
     };
   }
   async componentDidMount() {
@@ -32,7 +33,7 @@ class PasseioScreen extends Component {
     const {latitude, longitude} = this.state;
     if (this.state.fontLoading) {
       return (
-        <Container style={{backgroundColor:'black'}}>
+        <Container style={{backgroundColor:'white'}}>
           <Header style={{backgroundColor:'red', marginTop: 24}}/>
         <Content>
           <Spinner color='red' />
