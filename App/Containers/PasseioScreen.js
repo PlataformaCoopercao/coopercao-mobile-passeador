@@ -17,8 +17,7 @@ class PasseioScreen extends Component {
     this.state = {
       fontLoading: true, // to load font in expo
       walkId: this.props.navigation.state.params.walkId,
-      latitude: -8.137636,
-      longitude: -34.907432,
+      region: null,
       loaded: false,
       time: '',
       horaInicio: '',
@@ -84,8 +83,7 @@ class PasseioScreen extends Component {
     hour = date.getHours();
     if (hour <= 11) {
       TimeType = 'AM';
-    }
-    else {
+    } else {
       TimeType = 'PM';
     }
     if (hour > 12) {
@@ -111,6 +109,24 @@ class PasseioScreen extends Component {
   }
 
   async componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      ({coords: { latitude, longitude} }) => {
+        this.setState({
+          region: {
+            latitude,
+            longitude,
+            latitudeDelta: 0.0130,
+            longitudeDelta: 0.0130
+          }
+        })
+      }, //sucesso
+      () => {}, //erro
+      {
+        timeout: 5000,
+        enableHighAccuracy: true,
+        maximumAge: 1000,
+      }
+    )
     this.Clock = setInterval(() => this.getTime(), 1000);
     this.state.walkId = this.props.navigation.getParam('walkId', '0');
 
@@ -164,7 +180,7 @@ class PasseioScreen extends Component {
 
   render() {
     const { navigate } = this.props.navigation;
-    const { latitude, longitude } = this.state;
+    const { region } = this.state;
     if (!this.state.loaded) {
       return (
         <Container style={{ backgroundColor: 'white' }}>
@@ -178,13 +194,10 @@ class PasseioScreen extends Component {
       return (
         <Container style={styles.container}>
           <MapView
-            initialRegion={{
-              latitude,
-              longitude,
-              latitudeDelta: 0.0130,
-              longitudeDelta: 0.0130,
-            }}
+            initialRegion={region}
             style={styles.mapView}
+            showsUserLocation
+            loadingEnabled
             rotateEnabled={false}
             scrollEnabled={false}
             zoomEnabled={false}
