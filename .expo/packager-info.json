@@ -1,9 +1,9 @@
 {
-  "expoServerPort": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerPort": 19000,
+  "expoServerNgrokUrl": "https://bd-zyi.coopercaoapp.coopercao-mobile-passeador.exp.direct",
+  "packagerNgrokUrl": "https://packager.bd-zyi.coopercaoapp.coopercao-mobile-passeador.exp.direct",
+  "ngrokPid": 4004,
   "devToolsPort": 19002,
-  "packagerPort": null,
-  "packagerPid": null
+  "packagerPort": 19001,
+  "packagerPid": 8856
 }

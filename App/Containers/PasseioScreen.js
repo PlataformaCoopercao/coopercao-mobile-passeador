@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, Alert} from 'react-native';
 import {
   Container, Header, Content, Text, Button, List, ListItem, Spinner, Label, Left, Right
 } from 'native-base'
@@ -8,7 +8,6 @@ import { connect } from 'react-redux'
 import { strings } from '../locales/i18n';
 import MapView from 'react-native-maps';
 import * as firebase from 'firebase';
-import { Alert } from 'react-native'
 import axios from 'axios';
 
 
@@ -195,19 +194,23 @@ class PasseioScreen extends Component {
           </MapView>
           <Content style={styles.placesContainer}>
             <Content style={styles.place}>
-              <Label> {strings('PasseioScreen.start')}: </Label>
-              <Text style={{ justifyContent: 'center' }}>{this.state.horaInicio}</Text>
-              <Right><Label> {strings('PasseioScreen.end')}: </Label></Right>
-              <Text style={{ justifyContent: 'center' }}>{this.state.horaFinal}</Text>
               <List>
                 <ListItem>
-                  <Button style={styles.button} onPress={this.showTimeInicio} disabled={!this.state.btnIniciar}>
+                  <Label> {strings('PasseioScreen.start')}: </Label>
+                  <Text style={{ justifyContent: 'center' }}>{this.state.horaInicio}</Text>
+                </ListItem>
+                <ListItem>
+                  <Label> {strings('PasseioScreen.end')}: </Label>
+                  <Text style={{ justifyContent: 'center' }}>{this.state.horaFinal}</Text>
+                </ListItem>
+                <ListItem>
+                  <Button style={styles.buttonBegin} onPress={this.showTimeInicio} disabled={!this.state.btnIniciar}>
                     <Text>{strings('PasseioScreen.begin')}</Text>
                   </Button>
-                  <Button style={styles.button} onPress={this.showTimeFim}>
+                  <Button style={styles.buttonFinalize} onPress={this.showTimeFim}>
                     <Text>{strings('PasseioScreen.finalize')}</Text>
                   </Button>
-                  <Button style={styles.button} onPress={this.sendWalk}>
+                  <Button style={styles.buttonSend} onPress={this.sendWalk}>
                     <Text>{strings('PasseioScreen.send')}</Text>
                   </Button>
                 </ListItem>
@@ -239,22 +242,33 @@ const styles = StyleSheet.create({
 
   placesContainer: {
     width: '100%',
-    maxHeight: 160,
+    maxHeight: 180,
   },
 
   place: {
-    width: width - 40,
-    maxHeight: 160,
+    maxHeight: 180,
     backgroundColor: 'white',
     marginHorizontal: 20,
-    borderRadius: 10,
-    padding: 20,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10
   },
 
-  button: {
+  buttonBegin: {
+    backgroundColor: "red",
+    borderRadius: 10,
+    marginRight: 10
+  },
+
+  buttonFinalize: {
     backgroundColor: "red",
     borderRadius: 10,
     marginHorizontal: 10
+  },
+
+  buttonSend: {
+    backgroundColor: "red",
+    borderRadius: 10,
+    marginLeft: 10
   },
 
 });
