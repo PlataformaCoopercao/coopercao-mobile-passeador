@@ -175,12 +175,10 @@ class FeedbackScreen extends Component {
                     <Text style={{color:'white'}}>{strings('Footer.history_button')}</Text>
                   </Button>
                   <Button badge vertical onPress={() => navigate('PasseadorPasseiosScreen')}>
-                    <Badge style={{backgroundColor:'black'}}><Text style={{color:'white'}}>2</Text></Badge>
                     <Icon name='md-list-box' type='Ionicons' style={{color:'white'}}/>
                     <Text style={{color:'white'}}>{strings('Footer.assign_button')}</Text>
                   </Button>
                   <Button badge vertical onPress={() => navigate('PasseiosLivresScreen')}>
-                  <Badge style={{backgroundColor:'black'}}><Text style={{color:'white'}}>7</Text></Badge>
                     <Icon name='walk' style={{color:'white'}}/>
                     <Text style={{color:'white'}}>{strings('Footer.available_button')}</Text>
                   </Button>

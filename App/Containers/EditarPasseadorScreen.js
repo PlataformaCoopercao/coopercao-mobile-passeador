@@ -39,17 +39,20 @@ class  EditarPasseadorScreen extends Component {
       complemento: '',
       telefone: '',
       uri: '',
-      loaded: false
+      loaded: false,
+      walker: {}
     };
   }
 
   getWalkerData () {
     this.setState({loaded:false});
     axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/getWalker', {id: firebase.auth().currentUser.uid})
-    .then(response => this.setState({nome: response.data.name, cpf: response.data.cpf, genero: response.data.gender,
+    .then(response => {
+    this.state.walker = response.data;
+    this.setState({nome: response.data.name, cpf: response.data.cpf, genero: response.data.gender,
     estadoCivil: response.data.civilState, profissao: response.data.profession, cep: response.data.address.cep, bairro: response.data.address.district,
     rua: response.data.address.street, numero: response.data.address.num, complemento: response.data.address.compl, telefone: response.data.phoneNumber,
-    uri: response.data.photoURL, loaded:true})).catch((error) => {Alert.alert(error.message)});
+    uri: response.data.photoURL, loaded:true})}).catch((error) => {Alert.alert(error.message)});
   this.update()
   }
 
@@ -70,23 +73,30 @@ class  EditarPasseadorScreen extends Component {
       address.street = this.state.rua,
       address.num = this.state.numero,
       address.compl = this.state.complemento;
-    let walker = {}
+    var walker = {}
+      walker.id = firebase.auth().currentUser.uid,
       walker.name = this.state.nome,
       walker.cpf = this.state.cpf,
-      walker.gender = this.state.genero,
+      walker.email = this.state.walker.email,
       walker.civilState = this.state.estadoCivil,
       walker.profession = this.state.profissao,
       walker.phoneNumber = this.state.telefone,
       walker.photoURL = this.state.uri,
+      walker.accumulated_score = this.state.walker.accumulated_score,
+      walker.score = this.state.walker.score,
+      walker.total_walks = this.state.walker.total_walks,
       walker.address = address;
-    let collection = {}
-      collection.uid = this.state.uid,
-      collection.walker = walker;
+    var walkerSend = {}
+    walkerSend.walker = walker;
+    //console.log(walker);
+    //let collection = {}
+    //  collection.uid = this.state.uid,
+    //  collection.walker = walker;
     var url = 'https://us-central1-coopercao-backend.cloudfunctions.net/updateWalker';
-    axios.post(url, collection)
+    axios.post(url, walkerSend)
       .then(() => {
         Alert.alert('Atualizado com sucesso!');
-        this.props.navigation.navigate('PerfilPasseadorScreen');
+        this.props.navigation.navigate('MenuPasseadorScreen');
       })
       .catch((error) => {
         Alert.alert(error.message);
@@ -149,12 +159,12 @@ class  EditarPasseadorScreen extends Component {
                 {this.state.cpf}</Input>
               </InputGroup>
             </ListItem>
-            <ListItem>
+           {/* <ListItem>
               <InputGroup>
                 <Input placeholder={strings('EditarPasseadorScreen.gender')} onChangeText={(text) => { this.setState({ genero: text }) }}>
                 {this.state.genero}</Input>
               </InputGroup>
-            </ListItem>
+            </ListItem>*/}
             <ListItem>
               <InputGroup>
                 <Input placeholder={strings('EditarPasseadorScreen.civilState')} onChangeText={(text) => { this.setState({ estadoCivil: text }) }}>
@@ -219,12 +229,10 @@ class  EditarPasseadorScreen extends Component {
                     <Text style={{color:'white'}}>{strings('Footer.history_button')}</Text>
                   </Button>
                   <Button vertical onPress={() => navigate('PasseadorPasseiosScreen')}>
-                    <Badge style={{backgroundColor:'black'}}><Text style={{color:'white'}}>2</Text></Badge>
                     <Icon name='md-list-box' type='Ionicons' style={{color:'white'}}/>
                     <Text style={{color:'white'}}>{strings('Footer.assign_button')}</Text>
                   </Button>
                   <Button vertical onPress={() => navigate('PasseiosLivresScreen')}>
-                  <Badge style={{backgroundColor:'black'}}><Text style={{color:'white'}}>7</Text></Badge>
                     <Icon name='walk' style={{color:'white'}}/>
                     <Text style={{color:'white'}}>{strings('Footer.available_button')}</Text>
                   </Button>

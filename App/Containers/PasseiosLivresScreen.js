@@ -60,7 +60,8 @@ class PasseiosLivresScreen extends Component {
   assignWalk(){
     axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/assignWalk', {walk: this.state.walk, walker_id: firebase.auth().currentUser.uid})
     .then((response) =>{
-      Alert.alert(strings("PasseiosLivresScreen.assignWalkSuccess"))
+      Alert.alert(strings("PasseiosLivresScreen.assignWalkSuccess"));
+      this.props.navigation.navigate('MenuPasseadorScreen');
     }).catch((error) => {Alert.alert(error.message)});
   }
 
