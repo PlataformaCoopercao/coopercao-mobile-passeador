@@ -47,7 +47,7 @@ class  EditarPasseadorScreen extends Component {
     this.setState({loaded:false});
     axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/getWalker', {id: firebase.auth().currentUser.uid})
     .then(response => this.setState({nome: response.data.name, cpf: response.data.cpf, genero: response.data.gender,
-    estadoCivil: response.data.civilState, profissao: response.data.profession, cep: response.data.address.cep, bairro: response.data.address.area,
+    estadoCivil: response.data.civilState, profissao: response.data.profession, cep: response.data.address.cep, bairro: response.data.address.district,
     rua: response.data.address.street, numero: response.data.address.num, complemento: response.data.address.compl, telefone: response.data.phoneNumber,
     uri: response.data.photoURL, loaded:true})).catch((error) => {Alert.alert(error.message)});
   this.update()
@@ -66,7 +66,7 @@ class  EditarPasseadorScreen extends Component {
   submit() {
     let address = {}
       address.cep = this.state.cep,
-      address.area = this.state.bairro,
+      address.district = this.state.bairro,
       address.street = this.state.rua,
       address.num = this.state.numero,
       address.compl = this.state.complemento;

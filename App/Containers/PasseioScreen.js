@@ -52,7 +52,7 @@ class PasseioScreen extends Component {
           }
         }
         endereco = resposta.address.street + ", Num: " + resposta.address.num + "\n"
-          + resposta.address.area + "\n" + resposta.address.compl;
+          + resposta.address.district + "\n" + resposta.address.compl;
         console.log("termina loadWalk");
       })
       .catch((error) => {

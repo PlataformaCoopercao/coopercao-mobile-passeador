@@ -44,7 +44,7 @@ class PasseadorPasseiosScreen extends Component {
           this.state.dataArrayPasseios[x] = strings('PasseadorPasseiosScreen.dog') + response.data[x].dog.name +
           '\n' + strings('PasseadorPasseiosScreen.date') + response.data[x].date + ' ' + strings('PasseadorPasseiosScreen.time') +
           response.data[x].time + '\n' + strings('PasseadorPasseiosScreen.address') + response.data[x].address.street + ', ' +
-          response.data[x].address.num + ', ' + response.data[x].address.area
+          response.data[x].address.num + ', ' + response.data[x].address.district
           this.state.idPasseios[x] = response.data[x].id
         }
         this.setState({loaded:true});
