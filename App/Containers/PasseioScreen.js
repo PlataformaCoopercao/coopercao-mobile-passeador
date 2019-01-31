@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Dimensions, Alert} from 'react-native';
+import { StyleSheet, Dimensions, Alert, Platform} from 'react-native';
 import {
   Container, Header, Content, Text, Button, List, ListItem, Spinner, Label, Left, Right
 } from 'native-base'
@@ -9,6 +9,7 @@ import { strings } from '../locales/i18n';
 import MapView from 'react-native-maps';
 import * as firebase from 'firebase';
 import axios from 'axios';
+import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 
 
 class PasseioScreen extends Component {
@@ -16,6 +17,7 @@ class PasseioScreen extends Component {
     super(props);
     this.state = {
       fontLoading: true, // to load font in expo
+      searchFocused: false,
       walkId: this.props.navigation.state.params.walkId,
       region: null,
       loaded: false,
@@ -129,7 +131,6 @@ class PasseioScreen extends Component {
     )
     this.Clock = setInterval(() => this.getTime(), 1000);
     this.state.walkId = this.props.navigation.getParam('walkId', '0');
-
     await this.loadWalk();
     await this.loadWalker();
     await Font.loadAsync({
@@ -178,9 +179,22 @@ class PasseioScreen extends Component {
       });
   }
 
+  getPlaceID(){
+    let url = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query='+this.state.walkState.address.street+'&key=AIzaSyDu-hsUcb5YUu7QbOSSjpKhHlA2Cy0TTK0'
+    axios.post(url)
+    .then((response) =>{
+      console.log(response.results[0].placeID)
+    })
+    .catch((error) => {
+      console.warn(error.message);
+    });
+  }
+
   render() {
     const { navigate } = this.props.navigation;
     const { region } = this.state;
+    const { searchFocused } = this.state;
+    
     if (!this.state.loaded) {
       return (
         <Container style={{backgroundColor:'white'}}>
@@ -203,8 +217,7 @@ class PasseioScreen extends Component {
             zoomEnabled={false}
             showsPointsOfInterest={false}
             showBuildings={false}
-          >
-          </MapView>
+          />
           <Content style={styles.placesContainer}>
             <Content style={styles.place}>
               <List>
