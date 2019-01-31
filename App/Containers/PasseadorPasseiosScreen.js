@@ -16,9 +16,9 @@ import * as firebase from 'firebase';
 // Styles
 import styles from './Styles/PasseadorPasseiosScreenStyle'
 
-var BUTTONS = [strings('PasseadorPasseiosScreen.startWalk'), /*strings('PasseadorPasseiosScreen.requestReplace'), strings('PasseadorPasseiosScreen.cancelWalk'),*/ strings('PasseadorPasseiosScreen.back')];
-var DESTRUCTIVE_INDEX = 2;
-var CANCEL_INDEX = 3;
+var BUTTONS = ["Iniciar Passeio", "Requisitar Substituição", /*strings('PasseadorPasseiosScreen.cancelWalk'),*/ "Voltar"];
+var DESTRUCTIVE_INDEX = 3;
+var CANCEL_INDEX = 2;
 
 class PasseadorPasseiosScreen extends Component {
   constructor(props) {
@@ -107,8 +107,7 @@ class PasseadorPasseiosScreen extends Component {
                             },
                             buttonIndex => {
                               this.state.walkId = this.state.idPasseios[this.state.dataArrayPasseios.indexOf(item)];
-                              this.setState({ clicked: BUTTONS[buttonIndex] });
-                              if(this.state.clicked == strings('PasseadorPasseiosScreen.startWalk')) {
+                              if(BUTTONS[buttonIndex] == 'Iniciar Passeio') {
                                 this.startSoloWalk(this.state.walkId)
                               }
                             }
