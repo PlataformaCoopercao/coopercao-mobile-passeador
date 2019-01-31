@@ -16,7 +16,7 @@ import * as firebase from 'firebase';
 // Styles
 import styles from './Styles/PasseadorPasseiosScreenStyle'
 
-var BUTTONS = ["Iniciar Passeio", "Requisitar Substituição", /*strings('PasseadorPasseiosScreen.cancelWalk'),*/ "Voltar"];
+var BUTTONS = ["Marcar para passeio", "Requisitar Substituição", /*strings('PasseadorPasseiosScreen.cancelWalk'),*/ "Voltar"];
 var DESTRUCTIVE_INDEX = 3;
 var CANCEL_INDEX = 2;
 
@@ -31,7 +31,8 @@ class PasseadorPasseiosScreen extends Component {
       dataArrayPasseios: [],
       idPasseios: [],
       walkId: '',
-      loaded: false
+      loaded: false,
+      passeiosMarcados: []
     };
   }
 
@@ -44,9 +45,11 @@ class PasseadorPasseiosScreen extends Component {
           this.state.dataArrayPasseios[x] = strings('PasseadorPasseiosScreen.dog') + response.data[x].dog.name +
           '\n' + strings('PasseadorPasseiosScreen.date') + response.data[x].date + ' ' + strings('PasseadorPasseiosScreen.time') +
           response.data[x].time + '\n' + strings('PasseadorPasseiosScreen.address') + response.data[x].address.street + ', ' +
-          response.data[x].address.num + ', ' + response.data[x].address.district
-          this.state.idPasseios[x] = response.data[x].id
+          response.data[x].address.num + ', ' + response.data[x].address.district;
+          this.state.idPasseios[x] = response.data[x].id;
+          this.state.passeiosMarcados[x] = "snow";    //não marcado
         }
+        //console.log(this.state.idPasseios);
         this.setState({loaded:true});
         this.forceUpdate()
       } else {
@@ -69,6 +72,17 @@ class PasseadorPasseiosScreen extends Component {
     this.props.navigation.navigate('PasseioScreen', {
       walkId: walkId
     });
+  }
+
+  startWalks() {      //CONTINUAR DAQUI. POR QUE THIS.STATE.IDPASSEIOS ESTA UNDEFINED SE ELE N É ALTERADO? COLOCAR IF DE "JA ESTA MARCADO" PARA DESMARCAR
+    var walks = [];
+    console.log(this.state.idPasseios);
+    for(var y = 0; y < this.state.idPasseios.length; y++){
+      if(this.state.passeiosMarcados[y] === "red"){
+        walks = walks.concat(this.state.idPasseios[x]);
+      }
+    }
+    console.log(walks);
   }
 
   render() {
@@ -96,7 +110,8 @@ class PasseadorPasseiosScreen extends Component {
                 <List dataArray={this.state.dataArrayPasseios}
                   renderRow={(item) =>
                     <Card>
-                      <CardItem style={{justifyContent: 'space-between'}}>
+                      <CardItem style={{justifyContent: 'space-between',
+                       backgroundColor: this.state.passeiosMarcados[this.state.dataArrayPasseios.indexOf(item)]}}>
                       {<Button transparent dark
                         onPress={() =>
                           ActionSheet.show(
@@ -107,8 +122,10 @@ class PasseadorPasseiosScreen extends Component {
                             },
                             buttonIndex => {
                               this.state.walkId = this.state.idPasseios[this.state.dataArrayPasseios.indexOf(item)];
-                              if(BUTTONS[buttonIndex] == 'Iniciar Passeio') {
-                                this.startSoloWalk(this.state.walkId)
+                              if(BUTTONS[buttonIndex] == 'Marcar para passeio') {
+                                //this.startSoloWalk(this.state.walkId)
+                                this.state.passeiosMarcados[this.state.dataArrayPasseios.indexOf(item)] = "red";
+                                
                               }
                             }
                           )}
@@ -119,7 +136,11 @@ class PasseadorPasseiosScreen extends Component {
                       </CardItem>
                     </Card>
                   }>
+                  
                 </List>
+                <Button style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20, backgroundColor:'red' }} onPress={this.startWalks}>
+                    <Text>{strings('PasseadorPasseiosScreen.startWalk')}</Text>   
+                  </Button>
               </ScrollView>
             </Content>
             <Footer style={{backgroundColor:'red'}}>

@@ -34,7 +34,7 @@
   },
   "PasseadorPasseiosScreen": {
     "assignedWalks": "Passeios Atribuídos",
-    "startWalk": "Iniciar Passeio",
+    "startWalk": "Iniciar Passeio(s)",
     "requestReplace": "Requisitar Substituição",
     "cancelWalk": "Cancelar Passeio",
     "back": "Voltar",
