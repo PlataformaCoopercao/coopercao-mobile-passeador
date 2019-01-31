@@ -76,11 +76,11 @@ class PasseadorPasseiosScreen extends Component {
     if (!this.state.loaded) {
       return (
         <Container style={{backgroundColor:'white'}}>
-          <Header style={{backgroundColor:'red', marginTop: 22}}/>
-        <Content>
-          <Spinner color='red' />
-        </Content>
-      </Container>
+        <Header style={{backgroundColor:'red', marginTop: 22}} />
+      <Content>
+        <Spinner color='red' />
+      </Content>
+    </Container>
       );
     } else {
       return (

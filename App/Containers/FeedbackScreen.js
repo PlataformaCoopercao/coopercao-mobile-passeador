@@ -85,11 +85,11 @@ class FeedbackScreen extends Component {
     if (this.state.fontLoading) {
       return (
         <Container style={{backgroundColor:'white'}}>
-          <Header style={{backgroundColor:'red', marginTop: 22}}/>
-        <Content>
-          <Spinner color='red' />
-        </Content>
-      </Container>
+        <Header style={{backgroundColor:'red', marginTop: 22}} />
+      <Content>
+        <Spinner color='red' />
+      </Content>
+    </Container>
       );
     } else {
       return (

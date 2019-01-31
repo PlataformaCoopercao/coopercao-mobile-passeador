@@ -183,12 +183,12 @@ class PasseioScreen extends Component {
     const { region } = this.state;
     if (!this.state.loaded) {
       return (
-        <Container style={{ backgroundColor: 'white' }}>
-          <Header style={{ backgroundColor: 'red', marginTop: 24 }} />
-          <Content>
-            <Spinner color='red' />
-          </Content>
-        </Container>
+        <Container style={{backgroundColor:'white'}}>
+        <Header style={{backgroundColor:'red', marginTop: 22}} />
+      <Content>
+        <Spinner color='red' />
+      </Content>
+    </Container>
       );
     } else {
       return (
