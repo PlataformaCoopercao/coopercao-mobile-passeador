@@ -53,6 +53,7 @@ class PasseadorPasseiosScreen extends Component {
         this.setState({loaded:true});
         this.forceUpdate()
       } else {
+        console.log('Sem passeios agendados')
       }
     }).catch((error) => {Alert.alert(error.message)});
   }
@@ -122,10 +123,12 @@ class PasseadorPasseiosScreen extends Component {
                             },
                             buttonIndex => {
                               this.state.walkId = this.state.idPasseios[this.state.dataArrayPasseios.indexOf(item)];
-                              if(BUTTONS[buttonIndex] == 'Marcar para passeio') {
+                              if(BUTTONS[buttonIndex] == "Marcar para passeio") {
                                 //this.startSoloWalk(this.state.walkId)
                                 this.state.passeiosMarcados[this.state.dataArrayPasseios.indexOf(item)] = "red";
                                 
+                              } else if(BUTTONS[buttonIndex] == "Requisitar Substituição") {
+                                console.log("Substituir")
                               }
                             }
                           )}

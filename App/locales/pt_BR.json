@@ -95,6 +95,7 @@
   "PasseiosLivresScreen": {
     "assignWalk": "Atribuir Passeio",
     "availableTitle": "Passeios Livres",
+    "walk": "Passeio",
     "dog": "Cachorro: ",
     "date": "Data: ",
     "time": "Horário: ",
