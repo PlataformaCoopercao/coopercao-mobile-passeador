@@ -16,9 +16,9 @@ import * as firebase from 'firebase';
 // Styles
 import styles from './Styles/PasseadorPasseiosScreenStyle'
 
-var BUTTONS = ["Iniciar Passeio", /*strings('PasseadorPasseiosScreen.requestReplace'), strings('PasseadorPasseiosScreen.cancelWalk'),*/ "Voltar"];
-var DESTRUCTIVE_INDEX = 2;
-var CANCEL_INDEX = 3;
+var BUTTONS = ["Iniciar Passeio", "Requisitar Substituição", /*strings('PasseadorPasseiosScreen.cancelWalk'),*/ "Voltar"];
+var DESTRUCTIVE_INDEX = 3;
+var CANCEL_INDEX = 2;
 
 class PasseadorPasseiosScreen extends Component {
   constructor(props) {
@@ -50,7 +50,6 @@ class PasseadorPasseiosScreen extends Component {
         this.setState({loaded:true});
         this.forceUpdate()
       } else {
-        console.log('Não tem passeios')
       }
     }).catch((error) => {Alert.alert(error.message)});
   }
@@ -108,8 +107,7 @@ class PasseadorPasseiosScreen extends Component {
                             },
                             buttonIndex => {
                               this.state.walkId = this.state.idPasseios[this.state.dataArrayPasseios.indexOf(item)];
-                              this.setState({ clicked: BUTTONS[buttonIndex] });
-                              if(this.state.clicked == 'Iniciar Passeio') {
+                              if(BUTTONS[buttonIndex] == 'Iniciar Passeio') {
                                 this.startSoloWalk(this.state.walkId)
                               }
                             }
