@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Dimensions, Alert, Platform} from 'react-native';
+import { StyleSheet, Dimensions, Alert, Platform } from 'react-native';
 import {
   Container, Header, Content, Text, Button, List, ListItem, Spinner, Label, Left, Right
 } from 'native-base'
@@ -10,7 +10,7 @@ import { Colors } from '../Themes';
 import MapView from 'react-native-maps';
 import * as firebase from 'firebase';
 import axios from 'axios';
-import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
 
 class PasseioScreen extends Component {
@@ -43,20 +43,19 @@ class PasseioScreen extends Component {
       .then((response) => {
         //console.log(response);
         var resposta = {};
-        var walkId = this.state.walkId;     //ignorar nome da variavel
-        for (i = 0; i < response.data.length; i++) {
-          var pls = response.data[i].id;    //ignorar nome da variavel
-          if (pls == walkId) {
-            //console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            //console.log(pls);
-            //console.log(cursed);
-            resposta = response.data[i];
-            this.state.walkState = resposta;
+        if (this.state.walkId.length < 2) {     //AQUI VERIFICA SE É UM PASSEIO SOLO OU NÃO
+          var walkId = this.state.walkId[0];     //ignorar nome da variavel
+          for (i = 0; i < response.data.length; i++) {
+            var pls = response.data[i].id;    //ignorar nome da variavel
+            if (pls == walkId) {
+              resposta = response.data[i];
+              this.state.walkState = resposta;
+            }
           }
+          endereco = resposta.address.street + ", Num: " + resposta.address.num + "\n"
+            + resposta.address.district + "\n" + resposta.address.compl;
         }
-        endereco = resposta.address.street + ", Num: " + resposta.address.num + "\n"
-          + resposta.address.district + "\n" + resposta.address.compl;
-        //console.log("termina loadWalk");
+
       })
       .catch((error) => {
         console.warn(error.message);
@@ -113,7 +112,7 @@ class PasseioScreen extends Component {
 
   async componentDidMount() {
     navigator.geolocation.getCurrentPosition(
-      ({coords: { latitude, longitude} }) => {
+      ({ coords: { latitude, longitude } }) => {
         this.setState({
           region: {
             latitude,
@@ -123,7 +122,7 @@ class PasseioScreen extends Component {
           }
         })
       }, //sucesso
-      () => {}, //erro
+      () => { }, //erro
       {
         timeout: 5000,
         enableHighAccuracy: true,
@@ -180,30 +179,30 @@ class PasseioScreen extends Component {
       });
   }
 
-  getPlaceID(){
-    let url = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query='+this.state.walkState.address.street+'&key=AIzaSyDu-hsUcb5YUu7QbOSSjpKhHlA2Cy0TTK0'
+  getPlaceID() {
+    let url = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=' + this.state.walkState.address.street + '&key=AIzaSyDu-hsUcb5YUu7QbOSSjpKhHlA2Cy0TTK0'
     axios.post(url)
-    .then((response) =>{
-      console.log(response.results[0].placeID)
-    })
-    .catch((error) => {
-      console.warn(error.message);
-    });
+      .then((response) => {
+        console.log(response.results[0].placeID)
+      })
+      .catch((error) => {
+        console.warn(error.message);
+      });
   }
 
   render() {
     const { navigate } = this.props.navigation;
     const { region } = this.state;
     const { searchFocused } = this.state;
-    
+
     if (!this.state.loaded) {
       return (
-        <Container style={{backgroundColor:'white'}}>
-        <Header style={{backgroundColor:Colors.coal, marginTop: 22}} />
-      <Content>
-        <Spinner color={Colors.coal} />
-      </Content>
-    </Container>
+        <Container style={{ backgroundColor: 'white' }}>
+          <Header style={{ backgroundColor: Colors.coal, marginTop: 22 }} />
+          <Content>
+            <Spinner color={Colors.coal} />
+          </Content>
+        </Container>
       );
     } else {
       return (

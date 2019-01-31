@@ -34,6 +34,7 @@
   },
   "PasseadorPasseiosScreen": {
     "assignedWalks": "Passeios Atribuídos",
+    "noWalkSelected": "Selecione um ou mais passeios",
     "startWalk": "Iniciar Passeio(s)",
     "requestReplace": "Requisitar Substituição",
     "cancelWalk": "Cancelar Passeio",
