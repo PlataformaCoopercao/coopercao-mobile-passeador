@@ -44,37 +44,52 @@ class HistoricoPasseadorScreen extends Component {
       clicked: 9,
       isVisible: false,
       dataArrayPasseios: [[], []],
+      walkChecks: [],
       walkKeys: [],
       remount: 1,
       loaded: false
     };
   }
 
-  getHistoricoPasseios(){
-    this.setState({loaded:false});
-    axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/getWalkerHistory', {walker_id: firebase.auth().currentUser.uid})
-    .then((response) => {
-      if(response.data != null){
-        for(var x = 0; x < response.data.length; x++){
+  getHistoricoPasseios() {
+    this.setState({ loaded: false });
+    axios.post('https://us-central1-coopercao-backend.cloudfunctions.net/getWalkerHistory', { walker_id: firebase.auth().currentUser.uid })
+      .then((response) => {
+        if (response.data != null) {
+          for (var x = 0; x < response.data.length; x++) {
             this.state.walkKeys[x] = response.data[x].id;
-            this.state.dataArrayPasseios[0][x] = 
-            strings("HistoricoPasseadorScreen.date")+ response.data[x].date + strings("HistoricoPasseadorScreen.time")+ response.data[x].time +
-            strings("HistoricoPasseadorScreen.duration")+ response.data[x].walk_duration + strings("HistoricoPasseadorScreen.value")+ response.data[x].value +
-            strings("HistoricoPasseadorScreen.dog")+ response.data[x].dog.name + strings("HistoricoPasseadorScreen.street")+ response.data[x].address.street;
-            this.state.dataArrayPasseios[1][x] = response.data[x].dog.photoUrl;          
+            this.state.dataArrayPasseios[0][x] =
+              strings("HistoricoPasseadorScreen.date") + response.data[x].date + strings("HistoricoPasseadorScreen.time") + response.data[x].time +
+              strings("HistoricoPasseadorScreen.duration") + response.data[x].walk_duration + strings("HistoricoPasseadorScreen.value") + response.data[x].value +
+              strings("HistoricoPasseadorScreen.dog") + response.data[x].dog.name + strings("HistoricoPasseadorScreen.street") + response.data[x].address.street;
+            this.state.dataArrayPasseios[1][x] = response.data[x].dog.photoUrl;
+            if (response.data[x].feedback != null) {
+              this.state.walkChecks[x] = 1;
+            } else {
+              this.state.walkChecks[x] = 0;
+            }
+          }
+          this.setState({ loaded: true });
+          this.forceUpdate();
+        } else {
+          Alert.alert(strings("HistoricoPasseadorScreen.noWalks"));
         }
-        this.setState({loaded:true});
-        this.forceUpdate();
-      }else{
-        Alert.alert(strings("HistoricoPasseadorScreen.noWalks"));
       }
-    }
-    ).catch((error) => {
-      Alert.alert(error.message);
-    });
+      ).catch((error) => {
+        Alert.alert(error.message);
+      });
   }
 
-   
+  checkPasseios(item){
+    if(this.state.walkChecks[this.state.dataArrayPasseios[0].indexOf(item)]==0){
+    return <Button onPress={() => this.props.navigation.navigate('FeedbackScreen', { walkKey: this.state.walkKeys[this.state.dataArrayPasseios[0].indexOf(item)], })} trasparent style={{ backgroundColor: 'white', marginTop: 10 }}>
+      <Icon name='ios-medal' type='Ionicons' style={{ color: 'black' }} />
+    </Button>
+    } else {
+      return;
+    }
+  }
+
   forceRemount() {
     this.setState({
       remount: this.state.remount + 1
@@ -92,7 +107,7 @@ class HistoricoPasseadorScreen extends Component {
     });
     this.setState({ fontLoading: false });
   }
-  
+
   // alertItemName = (item) => {
   //   Alert.alert(
   //     'Feedback do Passeio',
@@ -102,28 +117,28 @@ class HistoricoPasseadorScreen extends Component {
   //     ],
   //     { cancelable: false }
   //   )
-    
+
   // }
 
-  
+
   render() {
     const { navigate } = this.props.navigation;
     if (!this.state.loaded) {
       return (
         <Container style={{backgroundColor:'white'}}>
         <Header style={{backgroundColor:'red', marginTop: 22}} />
-      <Content>
-        <Spinner color='red' />
-      </Content>
-    </Container>
+          <Content>
+            <Spinner color='red' />
+          </Content>
+        </Container>
       );
     } else {
       return (
         <Root>
           <Container style={{ backgroundColor: 'white' }}>
-            <Header style={{ backgroundColor: 'red', marginTop: 25}}>
+            <Header style={{ backgroundColor: 'red', marginTop: 25 }}>
               <Left>
-                <Icon name='arrow-back' style={{ marginHorizontal: 10}} onPress={() => navigate('MenuPasseadorScreen')} />
+                <Icon name='arrow-back' style={{ marginHorizontal: 10 }} onPress={() => navigate('MenuPasseadorScreen')} />
               </Left>
               <Body><Title style={{ marginHorizontal: 10, color: Colors.snow }}>{strings("HistoricoPasseadorScreen.walkHistory")}</Title></Body>
             </Header>
@@ -134,15 +149,13 @@ class HistoricoPasseadorScreen extends Component {
                     <Card>
                       <CardItem style={{}} >
                         <Left>
-                        <Thumbnail source={{ uri:this.state.dataArrayPasseios[1][this.state.dataArrayPasseios[0].indexOf(item)]}} />
+                          <Thumbnail source={{ uri: this.state.dataArrayPasseios[1][this.state.dataArrayPasseios[0].indexOf(item)] }} />
                         </Left>
                         <Body>
                           <Text style={{}}>{item}</Text>
                         </Body>
                         <Right>
-                          <Button onPress={() => navigate('FeedbackScreen', {walkKey: this.state.walkKeys[this.state.dataArrayPasseios[0].indexOf(item)],})} trasparent style={{ backgroundColor: 'white', marginTop: 10 }}>
-                          <Icon name='ios-medal' type='Ionicons' style={{color:'black'}}/>
-                        </Button>
+                          {this.checkPasseios(item)}
                         </Right>
                       </CardItem>
                     </Card>
@@ -151,31 +164,31 @@ class HistoricoPasseadorScreen extends Component {
               </ScrollView>
             </Content>
             <Footer style={{ backgroundColor: 'red' }}>
-                <FooterTab style={{backgroundColor:'red'}}>
-                  <Button onPress={() => navigate('MenuPasseadorScreen')}>
-                    <Icon name='md-person' type='Ionicons' style={{color:'white'}}/>
-                    <Text style={{color:'white'}}>{strings('Footer.menu_button')}</Text>
-                  </Button>
-                  <Button onPress={() => navigate('HistoricoPasseadorScreen')}>
-                    <Icon name='md-calendar' style={{color:'white'}}/>
-                    <Text style={{color:'white'}}>{strings('Footer.history_button')}</Text>
-                  </Button>
-                  <Button onPress={() => navigate('PasseadorPasseiosScreen')}>
-                    <Icon name='md-list-box' type='Ionicons' style={{color:'white'}}/>
-                    <Text style={{color:'white'}}>{strings('Footer.assign_button')}</Text>
-                  </Button>
-                  <Button onPress={() => navigate('PasseiosLivresScreen')}>
-                    <Icon name='walk' style={{color:'white'}}/>
-                    <Text style={{color:'white'}}>{strings('Footer.available_button')}</Text>
-                  </Button>
-                </FooterTab>
-              </Footer>
+              <FooterTab style={{ backgroundColor: 'red' }}>
+                <Button onPress={() => navigate('MenuPasseadorScreen')}>
+                  <Icon name='md-person' type='Ionicons' style={{ color: 'white' }} />
+                  <Text style={{ color: 'white' }}>{strings('Footer.menu_button')}</Text>
+                </Button>
+                <Button onPress={() => navigate('HistoricoPasseadorScreen')}>
+                  <Icon name='md-calendar' style={{ color: 'white' }} />
+                  <Text style={{ color: 'white' }}>{strings('Footer.history_button')}</Text>
+                </Button>
+                <Button onPress={() => navigate('PasseadorPasseiosScreen')}>
+                  <Icon name='md-list-box' type='Ionicons' style={{ color: 'white' }} />
+                  <Text style={{ color: 'white' }}>{strings('Footer.assign_button')}</Text>
+                </Button>
+                <Button onPress={() => navigate('PasseiosLivresScreen')}>
+                  <Icon name='walk' style={{ color: 'white' }} />
+                  <Text style={{ color: 'white' }}>{strings('Footer.available_button')}</Text>
+                </Button>
+              </FooterTab>
+            </Footer>
           </Container>
         </Root>
 
-    ) 
+      )
+    }
   }
-}
 }
 
 const mapStateToProps = (state) => {
