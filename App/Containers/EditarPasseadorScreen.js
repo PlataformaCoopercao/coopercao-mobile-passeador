@@ -95,7 +95,7 @@ class  EditarPasseadorScreen extends Component {
     var url = 'https://us-central1-coopercao-backend.cloudfunctions.net/updateWalker';
     axios.post(url, walkerSend)
       .then(() => {
-        Alert.alert('Atualizado com sucesso!');
+        Alert.alert(strings("General.success"));
         this.props.navigation.navigate('MenuPasseadorScreen');
       })
       .catch((error) => {
