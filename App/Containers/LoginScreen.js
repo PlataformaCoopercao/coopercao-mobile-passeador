@@ -6,6 +6,7 @@ import {Container, Header, Content, Body, Text, Left, Right,
 } from 'native-base'
 import { Font } from "expo"
 import { strings } from '../locales/i18n';
+import { Colors } from '../Themes';
 import I18n from 'react-native-i18n';
 import * as firebase from 'firebase';
 // Styles
@@ -68,9 +69,9 @@ class LoginScreen extends Component {
     if (this.state.fontLoading) {
       return (
         <Container style={{backgroundColor:'white'}}>
-        <Header style={{backgroundColor:'red', marginTop: 22}} />
+        <Header style={{backgroundColor:Colors.coal, marginTop: 22}} />
       <Content>
-        <Spinner color='red' />
+        <Spinner color={Colors.coal} />
       </Content>
     </Container>
       );
@@ -79,18 +80,18 @@ class LoginScreen extends Component {
         <Container>
           <Header style={{ backgroundColor: 'white', marginTop: 24}}>
           <Left>
-      <Button onPress={() => this.setLocalePT()} style={{ backgroundColor:'red' }}>
+      <Button onPress={() => this.setLocalePT()} style={{ backgroundColor: Colors.coal }}>
       <Text>{'PT'}</Text>
       </Button>
       </Left>
       <Right>
-      <Button onPress={() => this.setLocaleEN()} style={{ backgroundColor:'red' }}>
+      <Button onPress={() => this.setLocaleEN()} style={{ backgroundColor: Colors.coal }}>
       <Text>{'EN'}</Text>
       </Button>
       </Right>
           </Header>
           <Content style={{alignContent:"stretch"}}>
-          <Thumbnail style={{alignSelf:'center', height: 250, width: 250}} source={require('../Images/logoCoopercao.png')}/>
+          <Thumbnail style={{alignSelf:'center', height: 250, width: 250}} source={require('../Images/logoCoopercaoPasseador.png')}/>
         <List>
           <ListItem>
               <InputGroup>
@@ -105,7 +106,7 @@ class LoginScreen extends Component {
               </InputGroup>
           </ListItem>
       </List>
-      <Button style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20, backgroundColor:'red' }} onPress={this.onEntrarPress}>
+      <Button style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20, backgroundColor: Colors.coal }} onPress={this.onEntrarPress}>
       <Text>{strings('LoginScreen.enter')}</Text>   
       </Button>
       <Body/>

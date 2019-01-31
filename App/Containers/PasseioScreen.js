@@ -6,6 +6,7 @@ import {
 import { Font } from "expo"
 import { connect } from 'react-redux'
 import { strings } from '../locales/i18n';
+import { Colors } from '../Themes';
 import MapView from 'react-native-maps';
 import * as firebase from 'firebase';
 import axios from 'axios';
@@ -198,9 +199,9 @@ class PasseioScreen extends Component {
     if (!this.state.loaded) {
       return (
         <Container style={{backgroundColor:'white'}}>
-        <Header style={{backgroundColor:'red', marginTop: 22}} />
+        <Header style={{backgroundColor:Colors.coal, marginTop: 22}} />
       <Content>
-        <Spinner color='red' />
+        <Spinner color={Colors.coal} />
       </Content>
     </Container>
       );
