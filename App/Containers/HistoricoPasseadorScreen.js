@@ -126,9 +126,9 @@ class HistoricoPasseadorScreen extends Component {
     if (!this.state.loaded) {
       return (
         <Container style={{backgroundColor:'white'}}>
-        <Header style={{backgroundColor:'red', marginTop: 22}} />
+        <Header style={{backgroundColor:Colors.coal, marginTop: 22}} />
           <Content>
-            <Spinner color='red' />
+            <Spinner color={Colors.coal} />
           </Content>
         </Container>
       );
@@ -136,7 +136,7 @@ class HistoricoPasseadorScreen extends Component {
       return (
         <Root>
           <Container style={{ backgroundColor: 'white' }}>
-            <Header style={{ backgroundColor: 'red', marginTop: 25 }}>
+            <Header style={{ backgroundColor: Colors.coal, marginTop: 25 }}>
               <Left>
                 <Icon name='arrow-back' style={{ marginHorizontal: 10 }} onPress={() => navigate('MenuPasseadorScreen')} />
               </Left>
@@ -163,8 +163,8 @@ class HistoricoPasseadorScreen extends Component {
                 </List>
               </ScrollView>
             </Content>
-            <Footer style={{ backgroundColor: 'red' }}>
-              <FooterTab style={{ backgroundColor: 'red' }}>
+            <Footer style={{ backgroundColor: Colors.coal }}>
+              <FooterTab style={{ backgroundColor: Colors.coal }}>
                 <Button onPress={() => navigate('MenuPasseadorScreen')}>
                   <Icon name='md-person' type='Ionicons' style={{ color: 'white' }} />
                   <Text style={{ color: 'white' }}>{strings('Footer.menu_button')}</Text>

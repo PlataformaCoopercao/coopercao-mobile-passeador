@@ -83,17 +83,17 @@ class PasseiosLivresScreen extends Component {
     if (!this.state.loaded) {
       return (
         <Container style={{backgroundColor:'white'}}>
-        <Header style={{backgroundColor:'red', marginTop: 22}} />
+        <Header style={{backgroundColor:Colors.coal, marginTop: 22}} />
       <Content>
-        <Spinner color='red' />
+        <Spinner color={Colors.coal} />
       </Content>
     </Container>
       );
     } else {
       return (
         <Root>
-          <Container style={{backgroundColor:'red'}}>
-          <Header style={{backgroundColor:'red', marginTop: 25}}>
+          <Container style={{backgroundColor:Colors.coal}}>
+          <Header style={{backgroundColor:Colors.coal, marginTop: 25}}>
               <Left><Icon name='arrow-back' style={{ marginHorizontal: 10}} onPress={() => navigate('MenuPasseadorScreen')} /></Left>
               <Body><Title style={{color: Colors.snow}}>{strings('PasseiosLivresScreen.availableTitle')}</Title></Body>
             </Header>
@@ -128,8 +128,8 @@ class PasseiosLivresScreen extends Component {
                 </List>
               </ScrollView>
             </Content>
-            <Footer style={{backgroundColor:'red'}}>
-                <FooterTab style={{backgroundColor:'red'}}>
+            <Footer style={{backgroundColor:Colors.coal}}>
+                <FooterTab style={{backgroundColor:Colors.coal}}>
                   <Button onPress={() => navigate('MenuPasseadorScreen')}>
                     <Icon name='md-person' type='Ionicons' style={{color:'white'}}/>
                     <Text style={{color:'white'}}>{strings('Footer.menu_button')}</Text>
