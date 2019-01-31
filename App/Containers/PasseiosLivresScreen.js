@@ -13,8 +13,8 @@ import { strings } from '../locales/i18n';
 import axios from 'axios';
 import * as firebase from 'firebase';
 
-var BUTTONS = ["Atribuir Passeio", "Cancelar"];
-var CANCEL_INDEX = 3;
+var BUTTONS = ["Atribuir Passeio", /*"Detalhes",*/ "Cancelar"];
+var CANCEL_INDEX = 1;
 
 class PasseiosLivresScreen extends Component {
   constructor(props) {
@@ -104,9 +104,24 @@ class PasseiosLivresScreen extends Component {
                     <Card>
                       <CardItem style={{justifyContent: 'space-between'}}>
                       <Text>{item}</Text>
-                      <Button transparent dark onPress={() => {this.state.walk = this.state.walks[this.state.dataArrayPasseios.indexOf(item)], this.assignWalk()}}>
-                        <Icon type='Ionicons' name='ios-paw' />
-                      </Button>
+                        {<Button transparent dark
+                          onPress={() =>
+                            ActionSheet.show(
+                              {
+                                options: BUTTONS,
+                                cancelButtonIndex: CANCEL_INDEX,
+                                title: strings('PasseiosLivresScreen.walk')
+                              },
+                              buttonIndex => {
+                                this.state.walk = this.state.walks[this.state.dataArrayPasseios.indexOf(item)]
+                                if(BUTTONS[buttonIndex] == "Atribuir Passeio") {
+                                  this.assignWalk()
+                                }
+                              }
+                            )}
+                          >
+                          <Icon type='Ionicons' name='ios-paw' />
+                        </Button>}
                       </CardItem>
                     </Card>
                   }>

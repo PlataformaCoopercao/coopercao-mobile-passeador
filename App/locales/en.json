@@ -95,6 +95,7 @@
   "PasseiosLivresScreen": {
     "assignWalk": "Assign Walk",
     "availableTitle": "Available Walks",
+    "walk": "Walk",
     "dog": "Dog: ",
     "date": "Date: ",
     "time": "Time: ",
